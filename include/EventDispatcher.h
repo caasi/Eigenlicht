@@ -1,0 +1,4 @@
+#ifndef __EIGENLICHT_EVENT_DISPATCHER_H__
+#define __EIGENLICHT_EVENT_DISPATCHER_H__
+
+#endif
