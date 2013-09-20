@@ -1,4 +1,4 @@
 Eigenlicht
 ==========
 
-GUI experimental for Irrlicht
+Experimental GUI for Irrlicht
