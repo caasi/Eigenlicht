@@ -12,6 +12,11 @@ EventDispatcher::EventDispatcher()
 
 EventDispatcher::~EventDispatcher()
 {
+    for (
+        map< string, vector< void (*)(Event*) >* >::iterator listeners = eventListenerList.begin();
+        listeners != eventListenerList.end();
+        delete listeners->second, ++listeners
+    );
 }
 
 void EventDispatcher::dispatchEvent(Event *event)
@@ -25,6 +30,16 @@ void EventDispatcher::dispatchEvent(Event *event)
 
 bool EventDispatcher::hasEventListener(string type, void (*listener)(Event*))
 {
+    vector < void (*)(Event*) > *listeners = findEventListeners(type);
+
+    if (listeners)
+    {
+        for (vector< void (*)(Event*) >::iterator it = listeners->begin(); it != listeners->end(); ++it)
+        {
+            if (*it == listener) return true;
+        }
+    }
+
     return false;
 }
 
@@ -41,24 +56,28 @@ void EventDispatcher::addEventListener(string type, void (*listener)(Event*))
     listeners->push_back(listener);
 }
 
-void EventDispatcher::removeEventListener(string type, void(*listener)(Event*))
+bool EventDispatcher::removeEventListener(string type, void(*listener)(Event*))
 {
-    /*
-    std::map< string, std::vector< void (*listener)(Event*) > >::iterator it = eventListenerList.find(type);
+    vector < void (*)(Event*) > *listeners = findEventListeners(type);
 
-    if (it != eventListenerList.end())
+    if (listeners)
     {
-        std::vector< void (*listener)(Event*) > listeners = it.second;
-        std::vector< void (*listener)(Event*) >::iterator func_it = listeners.begin();
-        
-        for (; func_it != listeners.end(); ++func_it)
+        vector< void (*)(Event*) >::iterator func = listeners->begin();
+
+        for (; func != listeners->end(); ++func)
         {
-            if (listener == *func_it) break;
+            if (*func == listener) break;
         }
 
-        if (func_it != listeners.end()) listeners.erase(func_it);
+        if (func != listeners->end())
+        {
+            listeners->erase(func);
+
+            return true;
+        }
     }
-    */
+
+    return false;
 }
 
 vector< void (*)(Event*) > *EventDispatcher::findEventListeners(string type)

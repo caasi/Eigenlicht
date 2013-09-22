@@ -70,6 +70,12 @@ int main(int argc, char *argv[])
 
     Eigenlicht gui3d;
     gui3d.addEventListener("update", &update);
+    gui3d.removeEventListener("update", &update);
+    gui3d.addEventListener("update", &update);
+    if (gui3d.hasEventListener("update", &update))
+    {
+        std::cout << "ready" << std::endl;
+    }
 
     smgr->addCubeSceneNode();
     smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));

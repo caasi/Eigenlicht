@@ -27,7 +27,7 @@ public:
 
     void addEventListener(string, void (*listener)(Event*));
 
-    void removeEventListener(string, void (*listener)(Event*));
+    bool removeEventListener(string, void (*listener)(Event*));
 
 private:
     map< string, vector< void (*)(Event*) >* > eventListenerList;
