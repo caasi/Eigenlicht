@@ -1,8 +1,7 @@
 #include <iostream>
 
 #include <irrlicht.h>
-#include <Eigenlicht.h>
-#include <Event.h>
+#include <eigenlicht.h>
 
 using namespace irr;
 
@@ -11,9 +10,6 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-
-using namespace eigen;
-using namespace event;
 
 class KeyBuffer : public IEventReceiver
 {
@@ -41,7 +37,7 @@ private:
     bool status[KEY_KEY_CODES_COUNT];
 };
 
-void update(Event *event)
+void update(eigen::event::Event *event)
 {
     std::cout << event->type << std::endl;
 }
@@ -68,7 +64,7 @@ int main(int argc, char *argv[])
     ISceneManager *smgr = device->getSceneManager();
     IGUIEnvironment *guienv = device->getGUIEnvironment();
 
-    Eigenlicht gui3d;
+    eigen::Manager gui3d;
     gui3d.addEventListener("update", &update);
     gui3d.removeEventListener("update", &update);
     gui3d.addEventListener("update", &update);

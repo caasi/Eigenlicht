@@ -1,18 +1,18 @@
-#include "../include/Eigenlicht.h"
+#include "../include/Manager.h"
 #include "../include/Event.h"
 
 using namespace eigen;
 using namespace event;
 
-Eigenlicht::Eigenlicht()
+Manager::Manager()
 {
 }
 
-Eigenlicht::~Eigenlicht()
+Manager::~Manager()
 {
 }
 
-void Eigenlicht::update()
+void Manager::update()
 {
     dispatchEvent(new Event("update"));
 }

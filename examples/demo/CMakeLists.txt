@@ -39,7 +39,7 @@ link_directories ("${IRRLICHT_LIB_DIR}")
 add_executable (
   demo
   ${CMAKE_SOURCE_DIR}/source/main.cpp
-  ${EIGENLICHT_SOURCE_DIR}/Eigenlicht.cpp
+  ${EIGENLICHT_SOURCE_DIR}/Manager.cpp
   ${EIGENLICHT_SOURCE_DIR}/Event.cpp
   ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp
 )
