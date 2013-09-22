@@ -19,6 +19,7 @@ add_library (
   ${EIGENLICHT_SOURCE_DIR}/Manager.cpp
   ${EIGENLICHT_SOURCE_DIR}/Event.cpp
   ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp
+  ${EIGENLICHT_SOURCE_DIR}/ComponentContainer.cpp
 )
 
 install (
