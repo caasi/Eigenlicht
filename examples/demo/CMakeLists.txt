@@ -13,7 +13,10 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set (IRRLICHT_SYSTEM_NAME "Linux")
 endif ()
 
+set (IRRLICHT_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../../../ThirdParty/irrlicht-1.8/include/")
 set (IRRLICHT_LIB_DIR "${CMAKE_SOURCE_DIR}/../../../ThirdParty/irrlicht-1.8/lib/${IRRLICHT_SYSTEM_NAME}/")
+set (EIGENLICHT_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../../include/")
+set (EIGENLICHT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../source/")
 set (CMAKE_BINARY_DIR "${CMAKE_SOURCE_DIR}/")
 
 message ("Irrlicht lib path: ${IRRLICHT_LIB_DIR}")
@@ -27,7 +30,8 @@ find_library (
 )
 
 include_directories (
-  "${CMAKE_SOURCE_DIR}/../../../ThirdParty/irrlicht-1.8/include/"
+  "${IRRLICHT_INCLUDE_DIR}"
+  "${EIGENLICHT_INCLUDE_DIR}"
 )
 
 link_directories ("${IRRLICHT_LIB_DIR}")
@@ -35,6 +39,9 @@ link_directories ("${IRRLICHT_LIB_DIR}")
 add_executable (
   demo
   ${CMAKE_SOURCE_DIR}/source/main.cpp
+  ${EIGENLICHT_SOURCE_DIR}/Eigenlicht.cpp
+  ${EIGENLICHT_SOURCE_DIR}/Event.cpp
+  ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
