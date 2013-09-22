@@ -4,7 +4,8 @@
 using namespace eigen;
 using namespace event;
 
-Manager::Manager()
+Manager::Manager():
+    IReferenceCounted()
 {
 }
 

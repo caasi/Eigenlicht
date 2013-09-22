@@ -64,13 +64,13 @@ int main(int argc, char *argv[])
     ISceneManager *smgr = device->getSceneManager();
     IGUIEnvironment *guienv = device->getGUIEnvironment();
 
-    eigen::Manager gui3d;
-    gui3d.addEventListener("update", &update);
-    gui3d.removeEventListener("update", &update);
-    gui3d.addEventListener("update", &update);
-    if (gui3d.hasEventListener("update", &update))
+    eigen::Manager *gui3d = new eigen::Manager;
+    gui3d->addEventListener("update", &update);
+    gui3d->removeEventListener("update", &update);
+    gui3d->addEventListener("update", &update);
+    if (gui3d->hasEventListener("update", &update))
     {
-        std::cout << "ready" << std::endl;
+        std::cout << "ready: " << gui3d->getReferenceCount() << std::endl;
     }
 
     smgr->addCubeSceneNode();
@@ -84,11 +84,12 @@ int main(int argc, char *argv[])
 
         smgr->drawAll();
         guienv->drawAll();
-        gui3d.update();
+        gui3d->update();
 
         driver->endScene();
     }
 
+    gui3d->drop();
     device->drop();
 
     return 0;
