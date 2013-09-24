@@ -1,20 +1,32 @@
 #ifndef __EIGEN_MANAGER_H__
 #define __EIGEN_MANAGER_H__
 
-#include <IReferenceCounted.h>
-#include "EventDispatcher.h"
+#include <ISceneManager.h>
+#include <ISceneNode.h>
+#include "IComponent.h"
+#include "ComponentContainer.h"
+
+using namespace irr;
+using namespace scene;
 
 namespace eigen
 {
 
-class Manager : public event::EventDispatcher, public irr::IReferenceCounted
+class Manager : public interactable::ComponentContainer
 {
 public:
-    Manager();
+    Manager(ISceneManager*);
 
     ~Manager();
 
+    virtual void add(IComponent*);
+
+    virtual bool remove(IComponent*);
+
     void update();
+private:
+    ISceneManager *smgr;
+    ISceneNode *testNode;
 };
 
 }

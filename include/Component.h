@@ -3,7 +3,7 @@
 
 #include <SMesh.h>
 
-#include "ComponentContainer.h"
+#include "IComponent.h"
 
 using namespace irr;
 using namespace scene;
@@ -13,7 +13,7 @@ namespace eigen
 namespace interactable
 {
 
-class Component : public ComponentContainer
+class Component : public IComponent
 {
 public:
     Component();

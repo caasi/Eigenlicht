@@ -11,7 +11,7 @@ using namespace eigen;
 using namespace interactable;
 
 Component::Component():
-    ComponentContainer()
+    IComponent()
 {
     S3DVertex vertices[4];
 

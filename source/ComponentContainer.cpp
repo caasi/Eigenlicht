@@ -4,7 +4,7 @@ using namespace eigen;
 using namespace interactable;
 
 ComponentContainer::ComponentContainer():
-    IReferenceCounted(),
+    IComponent(),
     parent(NULL)
 {
 }
@@ -12,34 +12,42 @@ ComponentContainer::ComponentContainer():
 ComponentContainer::~ComponentContainer()
 {
     for (
-        vector< ComponentContainer* >::iterator it = children.begin();
+        vector< IComponent* >::iterator it = children.begin();
         it != children.end();
         ++it
     )
     {
-        (*it)->parent->drop();
-        (*it)->parent = NULL;
-        (*it)->drop();
+        ComponentContainer *container = dynamic_cast<ComponentContainer*>(*it);
+
+        if (container)
+        {
+            container->parent->drop();
+            container->parent = NULL;
+            container->drop();
+        }
     }
 
     if (parent) parent->remove(this);
 }
 
-void ComponentContainer::add(ComponentContainer *component)
+void ComponentContainer::add(IComponent *component)
 {
-    if (component->parent != this)
+    ComponentContainer *container = dynamic_cast<ComponentContainer*>(component);
+
+    if (container && container->parent != this)
     {
-        if (component->parent) component->parent->remove(component);
-        component->parent = this;
-        component->parent->grab();
+        if (container->parent) container->parent->remove(container);
+        container->parent = this;
+        container->parent->grab();
     }
+
     children.push_back(component);
     component->grab();
 }
 
-bool ComponentContainer::remove(ComponentContainer *component)
+bool ComponentContainer::remove(IComponent *component)
 {
-    vector< ComponentContainer* >::iterator it = children.begin();
+    vector< IComponent* >::iterator it = children.begin();
 
     for (; it != children.end(); (*it)->drop(), ++it)
     {
@@ -48,8 +56,14 @@ bool ComponentContainer::remove(ComponentContainer *component)
 
     if (it != children.end())
     {
-        component->parent->drop();
-        component->parent = NULL;
+        ComponentContainer *container = dynamic_cast<ComponentContainer*>(component);
+
+        if (container)
+        {
+            container->parent->drop();
+            container->parent = NULL;
+        }
+
         component->drop();
         children.erase(it);
         return true;

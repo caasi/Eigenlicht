@@ -4,6 +4,7 @@
 #include <vector>
 #include <IReferenceCounted.h>
 
+#include "IComponent.h"
 #include "EventDispatcher.h"
 
 namespace eigen
@@ -11,20 +12,20 @@ namespace eigen
 namespace interactable
 {
 
-class ComponentContainer : public event::EventDispatcher, public irr::IReferenceCounted
+class ComponentContainer : public IComponent, public event::EventDispatcher
 {
 public:
     ComponentContainer();
 
     ~ComponentContainer();
 
-    void add(ComponentContainer*);
+    virtual void add(IComponent*);
 
-    bool remove(ComponentContainer*);
+    virtual bool remove(IComponent*);
 
 private:
     ComponentContainer *parent;
-    std::vector<ComponentContainer*> children;
+    std::vector<IComponent*> children;
 };
 
 }
