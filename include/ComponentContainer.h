@@ -12,7 +12,7 @@ namespace eigen
 namespace interactable
 {
 
-class ComponentContainer : protected IComponent, public event::EventDispatcher
+class ComponentContainer : virtual public IComponent, public event::EventDispatcher
 {
 public:
     ComponentContainer();

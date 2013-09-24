@@ -28,11 +28,9 @@ class IComponent : public IReferenceCounted
     friend class ComponentContainer;
 
 public:
-    IComponent():IReferenceCounted(),parent(NULL) {};
+    IComponent():IReferenceCounted(),parent(NULL) {}
 
-    ~IComponent();
-
-    virtual IMesh *getMesh() const;
+    virtual IMesh *getMesh() const { return NULL; }
 protected:
     ComponentContainer *parent;
 };

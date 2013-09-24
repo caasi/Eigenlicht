@@ -11,6 +11,10 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+using namespace eigen;
+using namespace event;
+using namespace interactable;
+
 class KeyBuffer : public IEventReceiver
 {
 public:
@@ -37,7 +41,7 @@ private:
     bool status[KEY_KEY_CODES_COUNT];
 };
 
-void update(eigen::event::Event *event)
+void update(Event *event)
 {
     std::cout << event->type << std::endl;
 }
@@ -64,16 +68,20 @@ int main(int argc, char *argv[])
     ISceneManager *smgr = device->getSceneManager();
     IGUIEnvironment *guienv = device->getGUIEnvironment();
 
-    eigen::Manager *gui3d = new eigen::Manager;
+    Manager *gui3d = new Manager(smgr);
     gui3d->addEventListener("update", &update);
     gui3d->removeEventListener("update", &update);
     gui3d->addEventListener("update", &update);
     if (gui3d->hasEventListener("update", &update))
     {
-        std::cout << "ready: " << gui3d->getReferenceCount() << std::endl;
+        std::cout << "ready" << std::endl;
     }
 
-    smgr->addCubeSceneNode();
+    Plane *plane = new Plane;
+    gui3d->add(plane);
+    plane->drop();
+
+    //smgr->addCubeSceneNode();
     smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
     while (device->run())

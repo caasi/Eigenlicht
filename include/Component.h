@@ -13,14 +13,14 @@ namespace eigen
 namespace interactable
 {
 
-class Component : public IComponent
+class Component : virtual public IComponent
 {
 public:
     Component();
 
     ~Component();
 
-    IMesh *getMesh() const { return planeMesh; }
+    virtual IMesh *getMesh() const { return planeMesh; }
 
 private:
     /**
