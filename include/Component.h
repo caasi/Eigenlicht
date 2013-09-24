@@ -16,19 +16,17 @@ namespace interactable
 class Component : virtual public IComponent
 {
 public:
-    Component();
+    Component():mesh(NULL) {}
 
-    ~Component();
+    virtual IMesh *getMesh() const { return mesh; }
 
-    virtual IMesh *getMesh() const { return planeMesh; }
-
-private:
+protected:
     /**
      * Let Manager handles SceneManager, and maps between SceneNodes and
      * Components, because we can get SceneNode and collision point
      * from ray
      **/
-    SMesh *planeMesh;
+    SMesh *mesh;
 };
 
 }
