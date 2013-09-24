@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     plane->drop();
 
     //smgr->addCubeSceneNode();
-    smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+    smgr->addCameraSceneNode(0, vector3df(0, 1, -3), vector3df(0, 1, 0));
 
     while (device->run())
     {
