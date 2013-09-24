@@ -13,12 +13,15 @@ Manager::Manager(ISceneManager *mgr):
 
 Manager::~Manager()
 {
+    if (testNode) testNode->drop();
     if (smgr) smgr->drop();
 }
 
 void Manager::add(IComponent *component)
 {
     ComponentContainer::add(component);
+
+    testNode = smgr->addMeshSceneNode(component->getMesh());
 }
 
 bool Manager::remove(IComponent *component)

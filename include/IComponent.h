@@ -21,14 +21,20 @@ namespace eigen
 namespace interactable
 {
 
+class ComponentContainer;
+
 class IComponent : public IReferenceCounted
 {
+    friend class ComponentContainer;
+
 public:
-    IComponent():IReferenceCounted() {};
+    IComponent():IReferenceCounted(),parent(NULL) {};
 
     ~IComponent();
 
     virtual IMesh *getMesh() const;
+protected:
+    ComponentContainer *parent;
 };
 
 }

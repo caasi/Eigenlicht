@@ -4,8 +4,7 @@ using namespace eigen;
 using namespace interactable;
 
 ComponentContainer::ComponentContainer():
-    IComponent(),
-    parent(NULL)
+    IComponent()
 {
 }
 
@@ -17,14 +16,9 @@ ComponentContainer::~ComponentContainer()
         ++it
     )
     {
-        ComponentContainer *container = dynamic_cast<ComponentContainer*>(*it);
-
-        if (container)
-        {
-            container->parent->drop();
-            container->parent = NULL;
-            container->drop();
-        }
+        (*it)->parent->drop();
+        (*it)->parent = NULL;
+        (*it)->drop();
     }
 
     if (parent) parent->remove(this);
@@ -32,13 +26,11 @@ ComponentContainer::~ComponentContainer()
 
 void ComponentContainer::add(IComponent *component)
 {
-    ComponentContainer *container = dynamic_cast<ComponentContainer*>(component);
-
-    if (container && container->parent != this)
+    if (component->parent != this)
     {
-        if (container->parent) container->parent->remove(container);
-        container->parent = this;
-        container->parent->grab();
+        if (component->parent) component->parent->remove(component);
+        component->parent = this;
+        component->parent->grab();
     }
 
     children.push_back(component);
@@ -56,14 +48,8 @@ bool ComponentContainer::remove(IComponent *component)
 
     if (it != children.end())
     {
-        ComponentContainer *container = dynamic_cast<ComponentContainer*>(component);
-
-        if (container)
-        {
-            container->parent->drop();
-            container->parent = NULL;
-        }
-
+        component->parent->drop();
+        component->parent = NULL;
         component->drop();
         children.erase(it);
         return true;

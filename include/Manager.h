@@ -2,7 +2,7 @@
 #define __EIGEN_MANAGER_H__
 
 #include <ISceneManager.h>
-#include <ISceneNode.h>
+#include <IMeshSceneNode.h>
 #include "IComponent.h"
 #include "ComponentContainer.h"
 
@@ -26,7 +26,7 @@ public:
     void update();
 private:
     ISceneManager *smgr;
-    ISceneNode *testNode;
+    IMeshSceneNode *testNode;
 };
 
 }

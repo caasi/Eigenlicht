@@ -12,7 +12,7 @@ namespace eigen
 namespace interactable
 {
 
-class ComponentContainer : public IComponent, public event::EventDispatcher
+class ComponentContainer : protected IComponent, public event::EventDispatcher
 {
 public:
     ComponentContainer();
@@ -24,7 +24,6 @@ public:
     virtual bool remove(IComponent*);
 
 private:
-    ComponentContainer *parent;
     std::vector<IComponent*> children;
 };
 

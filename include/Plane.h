@@ -1,6 +1,9 @@
 #ifndef __EIGEN_PLANE_H__
 #define __EIGEN_PLANE_H__
 
+#include "Component.h"
+#include "ComponentContainer.h"
+
 namespace eigen
 {
 namespace interactable
@@ -12,7 +15,7 @@ public:
     Plane();
 
     ~Plane();
-}
+};
 
 }
 }

@@ -21,6 +21,7 @@ add_library (
   ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp
   ${EIGENLICHT_SOURCE_DIR}/ComponentContainer.cpp
   ${EIGENLICHT_SOURCE_DIR}/Component.cpp
+  ${EIGENLICHT_SOURCE_DIR}/Plane.cpp
 )
 
 install (
