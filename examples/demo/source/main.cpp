@@ -15,10 +15,10 @@ using namespace eigen;
 using namespace event;
 using namespace interactable;
 
-class KeyBuffer : public IEventReceiver
+class InputBuffer : public IEventReceiver
 {
 public:
-    KeyBuffer()
+    InputBuffer()
     {
         for (u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i)
             status[i] = false;
@@ -29,6 +29,16 @@ public:
         if (event.EventType == irr::EET_KEY_INPUT_EVENT)
             status[event.KeyInput.Key] = event.KeyInput.PressedDown;
 
+        if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+        {
+            switch (event.MouseInput.Event)
+            {
+                case EMIE_MOUSE_MOVED:
+                    mouse.X = event.MouseInput.X;
+                    mouse.Y = event.MouseInput.Y;
+            }
+        }
+
         return false;
     }
 
@@ -36,6 +46,8 @@ public:
     {
         return status[keyCode];
     }
+
+    position2di mouse;
 
 private:
     bool status[KEY_KEY_CODES_COUNT];
@@ -48,7 +60,7 @@ void update(Event *event)
 
 int main(int argc, char *argv[])
 {
-    KeyBuffer keyBuffer;
+    InputBuffer inputBuffer;
 
     IrrlichtDevice *device = createDevice(
         video::EDT_OPENGL,
@@ -57,7 +69,7 @@ int main(int argc, char *argv[])
         false,
         false,
         false,
-        &keyBuffer
+        &inputBuffer
     );
 
     if (!device) return 1;
@@ -82,11 +94,17 @@ int main(int argc, char *argv[])
     plane->drop();
 
     //smgr->addCubeSceneNode();
-    smgr->addCameraSceneNode(0, vector3df(0, 1, -3), vector3df(0, 1, 0));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -3), vector3df(0, 1, 0));
+    // need helpers for matrix4, again
+    /*
+    camera->getProjectionMatrix();
+    camera->getViewMatrix();
+    camera->getViewMatrixAffector();
+    */
 
     while (device->run())
     {
-        if (keyBuffer.isDown(KEY_ESCAPE)) device->closeDevice();
+        if (inputBuffer.isDown(KEY_ESCAPE)) device->closeDevice();
 
         driver->beginScene(true, true, SColor(255, 22, 22, 29));
 
