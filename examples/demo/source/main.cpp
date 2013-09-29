@@ -113,7 +113,8 @@ int main(int argc, char *argv[])
     plane->drop();
 
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1), vector3df(0, 0.25, 0));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1));
+    camera->setTarget(vector3df(0, 1, 0));
 
     while (device->run())
     {
@@ -127,6 +128,18 @@ int main(int argc, char *argv[])
 
         driver->endScene();
 
+        /**
+         * TODO
+         * *
+         * Projector should get frustum from camera,
+         * update view matrix, then project or unproject.
+         * There are two types of useful projections/unprojections,
+         *  1. world space to view space
+         *  2. world space to ndc space
+         * Because I can't extend CCameraSceneNode,
+         * Projector will be a new class.
+         * Projector will change the vector to prevent temp objects.
+         */
         const SViewFrustum *frustum = camera->getViewFrustum();
         cout << "projection: " << frustum->getTransform(ETS_PROJECTION) << endl;
         cout << "view: "<< frustum->getTransform(ETS_VIEW) << endl;
