@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 #include <irrlicht.h>
 #include <eigenlicht.h>
@@ -14,6 +17,22 @@ using namespace gui;
 using namespace eigen;
 using namespace event;
 using namespace interactable;
+
+ostream &operator<< (ostream &out, const matrix4 &m)
+{
+    out << "{" << endl;
+
+    for (int i = 0; i < 16; ++i)
+    {
+        out << setw(10) << setfill(' ') << m[i];
+        if (i % 4 != 3) out << ", ";
+        if (i % 4 == 3) out << endl;
+    }
+
+    out << "}";
+
+    return out;
+}
 
 class InputBuffer : public IEventReceiver
 {
@@ -55,7 +74,7 @@ private:
 
 void update(Event *event)
 {
-    std::cout << event->type << std::endl;
+    //cout << event->type << endl;
 }
 
 int main(int argc, char *argv[])
@@ -86,7 +105,7 @@ int main(int argc, char *argv[])
     gui3d->addEventListener("update", &update);
     if (gui3d->hasEventListener("update", &update))
     {
-        std::cout << "ready" << std::endl;
+        cout << "ready" << endl;
     }
 
     Plane *plane = new Plane;
@@ -94,13 +113,7 @@ int main(int argc, char *argv[])
     plane->drop();
 
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -3), vector3df(0, 1, 0));
-    // need helpers for matrix4, again
-    /*
-    camera->getProjectionMatrix();
-    camera->getViewMatrix();
-    camera->getViewMatrixAffector();
-    */
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1), vector3df(0, 0.25, 0));
 
     while (device->run())
     {
@@ -113,6 +126,10 @@ int main(int argc, char *argv[])
         gui3d->update();
 
         driver->endScene();
+
+        const SViewFrustum *frustum = camera->getViewFrustum();
+        cout << "projection: " << frustum->getTransform(ETS_PROJECTION) << endl;
+        cout << "view: "<< frustum->getTransform(ETS_VIEW) << endl;
     }
 
     gui3d->drop();
