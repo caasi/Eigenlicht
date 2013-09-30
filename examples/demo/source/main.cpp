@@ -5,6 +5,7 @@ using namespace std;
 
 #include <irrlicht.h>
 #include <eigenlicht.h>
+#include <utils.h>
 
 using namespace irr;
 using namespace irr::core;
@@ -17,31 +18,6 @@ using namespace eigen;
 using namespace eigen::core;
 using namespace event;
 using namespace interactable;
-
-ostream &operator<< (ostream &out, const matrix4 &m)
-{
-    out << "{" << endl;
-
-    for (int i = 0; i < 16; ++i)
-    {
-        out << setw(10) << setfill(' ') << m[i];
-        if (i % 4 != 3) out << ",";
-        if (i % 4 == 3) out << endl;
-    }
-
-    out << "}";
-
-    return out;
-}
-
-ostream &operator<< (ostream &out, const vector3df &v)
-{
-    return out << "{ "
-               << setw(10) << setfill(' ') << v.X << ","
-               << setw(10) << setfill(' ') << v.Y << ","
-               << setw(10) << setfill(' ') << v.Z
-               << " }";
-}
 
 class InputBuffer : public IEventReceiver
 {
@@ -125,7 +101,7 @@ int main(int argc, char *argv[])
     ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1));
     /**
      * TODO
-     * *
+     **
      * Projector should get frustum from camera,
      * update view matrix, then project or unproject.
      * There are two types of useful projections/unprojections,
@@ -136,10 +112,14 @@ int main(int argc, char *argv[])
      * Projector will change the vector to prevent temp objects.
      */
     camera->setTarget(vector3df(0, 0, 0));
-    vector3df point = vector3df(0, 0, 0);
-    cout << "camera space: " << Projector::projectToCameraSpace(point, *camera) << endl;
+    vector3df point = vector3df(0, 1, 0);
+    cout << "to from camera: "
+         << Projector::unprojectFromCameraSpace(Projector::projectToCameraSpace(point, *camera), *camera)
+         << endl;
     point = vector3df(0, 1, 0);
-    cout << "camera space: " << Projector::projectToCameraSpace(point, *camera) << endl;
+    cout << "to from NDC: "
+         << Projector::unprojectFromNDCSpace(Projector::projectToNDCSpace(point, *camera), *camera)
+         << endl;
 
     while (device->run())
     {

@@ -17,8 +17,11 @@ class Projector
 public:
     static vector3df &projectToCameraSpace(vector3df&, ICameraSceneNode&);
     static vector3df &projectToNDCSpace(vector3df&, ICameraSceneNode&);
+    static vector3df &unprojectFromCameraSpace(vector3df&, ICameraSceneNode&);
+    static vector3df &unprojectFromNDCSpace(vector3df&, ICameraSceneNode&);
 private:
     static const matrix4 getViewMatrix(ICameraSceneNode&);
+    static void applyMatrix4(vector3df&, const matrix4&);
 };
 
 }
