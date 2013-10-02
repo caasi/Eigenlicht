@@ -15,6 +15,8 @@ namespace eigen
 class Manager : public interactable::ComponentContainer
 {
 public:
+    static const int ID_COMPONENT = 1 << 8;
+
     Manager(ISceneManager*);
 
     ~Manager();
@@ -24,6 +26,8 @@ public:
     virtual bool remove(IComponent*);
 
     void update();
+
+    ISceneNode *getTestNode() { return testNode; }
 private:
     ISceneManager *smgr;
     IMeshSceneNode *testNode;
