@@ -13,7 +13,9 @@ using namespace interactable;
 /* 1280 x 720 72dpi screen in meters */
 Plane::Plane(core::dimension2df size):
     Component(),
-    ComponentContainer()
+    ComponentContainer(),
+    upVector(vector3df(0, -1, 0)),
+    targetVector(vector3df(0, 0, -1))
 {
     S3DVertex vertices[4];
 

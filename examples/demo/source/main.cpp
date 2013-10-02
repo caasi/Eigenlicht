@@ -106,6 +106,13 @@ int main(int argc, char *argv[])
         cout << "has triangle selector" << endl;
     }
 
+    matrix4 planeMatrix;
+    planeMatrix.buildCameraLookAtMatrixLH(
+        planeNode->getAbsolutePosition(),
+        plane->getTargetVector(),
+        plane->getUpVector()
+    );
+
     //smgr->addCubeSceneNode();
     ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1));
     /**
@@ -162,7 +169,10 @@ int main(int argc, char *argv[])
 
         if (selectedSceneNode)
         {
+            /* collision is performed by bounding box, so the result is very strange */
             cout << "intersect: " << intersection << endl;
+            planeMatrix.transformVect(intersection);
+            cout << "view space: " << intersection << endl;
         }
 
         smgr->drawAll();
