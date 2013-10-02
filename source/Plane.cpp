@@ -19,10 +19,10 @@ Plane::Plane(core::dimension2df size):
 {
     S3DVertex vertices[4];
 
-    vertices[0] = S3DVertex(-size.Width / 2, -size.Height / 2, 1.0f, 1, 1, 0, SColor(255, 255, 255, 255), 0.0f, 0.0f);
-    vertices[1] = S3DVertex(-size.Width / 2,  size.Height / 2, 1.0f, 1, 1, 0, SColor(255, 255, 255, 255), 0.0f, 1.0f);
-    vertices[2] = S3DVertex( size.Width / 2,  size.Height / 2, 1.0f, 1, 1, 0, SColor(255, 255, 255, 255), 1.0f, 1.0f);
-    vertices[3] = S3DVertex( size.Width / 2, -size.Height / 2, 1.0f, 1, 1, 0, SColor(255, 255, 255, 255), 1.0f, 0.0f);
+    vertices[0] = S3DVertex(        0.0,          0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 0.0f);
+    vertices[1] = S3DVertex( size.Width,          0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 0.0f);
+    vertices[2] = S3DVertex( size.Width, -size.Height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 1.0f);
+    vertices[3] = S3DVertex(        0.0, -size.Height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 1.0f);
 
     u16 indicies[6];
 

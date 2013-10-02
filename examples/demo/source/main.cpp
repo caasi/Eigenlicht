@@ -171,7 +171,10 @@ int main(int argc, char *argv[])
         {
             /* collision is performed by bounding box, so the result is very strange */
             cout << "intersect: " << intersection << endl;
+            cout << "triangle: " << hitTriangle << endl;
             planeMatrix.transformVect(intersection);
+            intersection.X = intersection.X / 0.677333 * 1920;
+            intersection.Y = intersection.Y / 0.381 * 1080;
             cout << "view space: " << intersection << endl;
         }
 
