@@ -1,5 +1,15 @@
-#ifndef __EIGEN_UTILS_H__
-#define __EIGEN_UTILS_H__
+#ifndef __EIGENLICHT_UTILS_H__
+#define __EIGENLICHT_UTILS_H__
+
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+#include <matrix4.h>
+#include <vector3d.h>
+
+using namespace irr::core;
 
 ostream &operator<< (ostream &out, const matrix4 &m)
 {

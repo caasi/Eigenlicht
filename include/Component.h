@@ -1,5 +1,5 @@
-#ifndef __EIGEN_COMPONENT_H__
-#define __EIGEN_COMPONENT_H__
+#ifndef __EIGENLICHT_COMPONENT_H__
+#define __EIGENLICHT_COMPONENT_H__
 
 #include <SMesh.h>
 

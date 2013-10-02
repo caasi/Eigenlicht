@@ -1,5 +1,5 @@
-#ifndef __EIGEN_MANAGER_H__
-#define __EIGEN_MANAGER_H__
+#ifndef __EIGENLICHT_MANAGER_H__
+#define __EIGENLICHT_MANAGER_H__
 
 #include <ISceneManager.h>
 #include <IMeshSceneNode.h>

@@ -1,5 +1,5 @@
-#ifndef __EIGEN_PLANE_H__
-#define __EIGEN_PLANE_H__
+#ifndef __EIGENLICHT_PLANE_H__
+#define __EIGENLICHT_PLANE_H__
 
 #include <dimension2d.h>
 

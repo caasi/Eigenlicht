@@ -26,6 +26,10 @@ vector3df &Projector::unprojectFromCameraSpace(vector3df &vector, ICameraSceneNo
     return vector;
 }
 
+/**
+ * CSceneCollisionManager.getRayFromScreenCoordinates() is faster then this,
+ * if you just want to make a mouse ray
+ */
 vector3df &Projector::unprojectFromNDCSpace(vector3df &vector, ICameraSceneNode &camera)
 {
     matrix4 inversed;

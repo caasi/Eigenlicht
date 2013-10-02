@@ -1,5 +1,5 @@
-#ifndef __EIGEN_INTERFACE_COMPONENT_H__
-#define __EIGEN_INTERFACE_COMPONENT_H__
+#ifndef __EIGENLICHT_INTERFACE_COMPONENT_H__
+#define __EIGENLICHT_INTERFACE_COMPONENT_H__
 
 #include <IReferenceCounted.h>
 

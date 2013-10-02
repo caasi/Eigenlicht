@@ -1,5 +1,5 @@
-#ifndef __EIGEN_COMPONENT_CONTAINER_H__
-#define __EIGEN_COMPONENT_CONTAINER_H__
+#ifndef __EIGENLICHT_COMPONENT_CONTAINER_H__
+#define __EIGENLICHT_COMPONENT_CONTAINER_H__
 
 #include <vector>
 #include <IReferenceCounted.h>

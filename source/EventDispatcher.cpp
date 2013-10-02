@@ -1,10 +1,7 @@
 #include "../include/Event.h"
 #include "../include/EventDispatcher.h"
 
-using namespace std;
-
-using namespace eigen;
-using namespace event;
+using namespace eigen::event;
 
 EventDispatcher::EventDispatcher()
 {

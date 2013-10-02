@@ -1,5 +1,5 @@
-#ifndef __EIGEN_PROJECTOR_H__
-#define __EIGEN_PROJECTOR_H__
+#ifndef __EIGENLICHT_PROJECTOR_H__
+#define __EIGENLICHT_PROJECTOR_H__
 
 #include <ICameraSceneNode.h>
 
