@@ -2,6 +2,7 @@
 #define __EIGENLICHT_COMPONENT_H__
 
 #include <SMesh.h>
+#include <ISceneNode.h>
 
 #include "IComponent.h"
 
@@ -18,7 +19,9 @@ class Component : virtual public IComponent
 public:
     Component():mesh(NULL) {}
 
-    virtual IMesh *getMesh() const { return mesh; }
+    virtual IMesh *getMesh() { return mesh; }
+
+    virtual ISceneNode *getSceneNode() { return sceneNode; }
 
 protected:
     /**
@@ -27,6 +30,7 @@ protected:
      * from ray
      **/
     SMesh *mesh;
+    ISceneNode *sceneNode;
 };
 
 }

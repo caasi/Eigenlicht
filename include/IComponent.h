@@ -10,6 +10,7 @@ namespace scene
 {
 
 class IMesh;
+class ISceneNode;
 
 }
 }
@@ -24,18 +25,14 @@ namespace eigen
 namespace interactable
 {
 
-class ComponentContainer;
-
 class IComponent : public IReferenceCounted, public EventDispatcher
 {
-    friend class ComponentContainer;
-
 public:
-    IComponent():IReferenceCounted(),parent(NULL) {}
+    IComponent():IReferenceCounted() {}
 
-    virtual IMesh *getMesh() const { return NULL; }
-protected:
-    ComponentContainer *parent;
+    virtual IMesh *getMesh() { return NULL; }
+
+    virtual ISceneNode *getSceneNode() { return NULL; }
 };
 
 }

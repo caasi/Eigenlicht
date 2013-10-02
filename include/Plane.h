@@ -5,7 +5,6 @@
 #include <vector3d.h>
 
 #include "Component.h"
-#include "ComponentContainer.h"
 
 using namespace irr;
 using namespace core;

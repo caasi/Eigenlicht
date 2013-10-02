@@ -5,7 +5,6 @@
 #include "Event.h"
 #include "EventDispatcher.h"
 #include "IComponent.h"
-#include "ComponentContainer.h"
 #include "Component.h"
 #include "Plane.h"
 #include "Projector.h"
