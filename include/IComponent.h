@@ -2,6 +2,7 @@
 #define __EIGENLICHT_INTERFACE_COMPONENT_H__
 
 #include <IReferenceCounted.h>
+#include "EventDispatcher.h"
 
 namespace irr
 {
@@ -16,6 +17,8 @@ class IMesh;
 using namespace irr;
 using namespace scene;
 
+using namespace eigen::event;
+
 namespace eigen
 {
 namespace interactable
@@ -23,7 +26,7 @@ namespace interactable
 
 class ComponentContainer;
 
-class IComponent : public IReferenceCounted
+class IComponent : public IReferenceCounted, public EventDispatcher
 {
     friend class ComponentContainer;
 

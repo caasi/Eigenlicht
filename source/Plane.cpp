@@ -13,7 +13,6 @@ using namespace interactable;
 /* 1280 x 720 72dpi screen in meters */
 Plane::Plane(core::dimension2df size, f32 dpi):
     Component(),
-    ComponentContainer(),
     upVector(vector3df(0, -1, 0)),
     targetVector(vector3df(0, 0, -1))
 {

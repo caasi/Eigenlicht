@@ -12,7 +12,8 @@ namespace eigen
 namespace interactable
 {
 
-class ComponentContainer : virtual public IComponent, public event::EventDispatcher
+/* TODO: remove this class */
+class ComponentContainer : virtual public IComponent
 {
 public:
     ComponentContainer();
