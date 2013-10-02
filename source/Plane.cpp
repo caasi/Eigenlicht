@@ -11,18 +11,21 @@ using namespace eigen;
 using namespace interactable;
 
 /* 1280 x 720 72dpi screen in meters */
-Plane::Plane(core::dimension2df size):
+Plane::Plane(core::dimension2df size, f32 dpi):
     Component(),
     ComponentContainer(),
     upVector(vector3df(0, -1, 0)),
     targetVector(vector3df(0, 0, -1))
 {
+    f32 width = size.Width / dpi * 0.0254,
+        height = size.Height / dpi * 0.0254;
+
     S3DVertex vertices[4];
 
-    vertices[0] = S3DVertex(        0.0,          0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 0.0f);
-    vertices[1] = S3DVertex( size.Width,          0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 0.0f);
-    vertices[2] = S3DVertex( size.Width, -size.Height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 1.0f);
-    vertices[3] = S3DVertex(        0.0, -size.Height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 1.0f);
+    vertices[0] = S3DVertex(   0.0,    0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 0.0f);
+    vertices[1] = S3DVertex( width,    0.0, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 0.0f);
+    vertices[2] = S3DVertex( width, -height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 1.0f, 1.0f);
+    vertices[3] = S3DVertex(   0.0, -height, 0.0f, 0, 0, -1, SColor(255, 255, 255, 255), 0.0f, 1.0f);
 
     u16 indicies[6];
 

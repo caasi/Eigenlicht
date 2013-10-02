@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
     );
 
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 1, -1));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 0.5, -1));
     /**
      * TODO
      **

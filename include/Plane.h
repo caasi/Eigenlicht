@@ -18,7 +18,7 @@ namespace interactable
 class Plane : public Component, public ComponentContainer
 {
 public:
-    Plane(dimension2df size = dimension2df(0.677333, 0.381));
+    Plane(dimension2df size = dimension2df(1920, 1080), f32 dpi = 72.0);
 
     ~Plane();
 
