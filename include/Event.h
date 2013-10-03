@@ -10,6 +10,8 @@ namespace eigen
 namespace event
 {
 
+class EventDispatcher;
+
 struct Event
 {
     Event(string);
@@ -17,6 +19,8 @@ struct Event
     ~Event();
 
     string type;
+
+    EventDispatcher *target;
 };
 
 }

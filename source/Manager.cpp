@@ -5,6 +5,7 @@
 
 #include "../include/Manager.h"
 #include "../include/Event.h"
+#include "../include/Component.h"
 
 Manager::Manager(ISceneManager *mgr):
     IComponent(),
@@ -37,6 +38,7 @@ void Manager::add(IComponent *component)
 
     components.insert(pair<ISceneNode*, IComponent*>(node, component));
     component->grab();
+    component->setSceneNode(node);
 }
 
 bool Manager::remove(IComponent *component)
@@ -53,6 +55,7 @@ void Manager::add(core::line3df *line)
 void Manager::update()
 {
     Event *event = new Event("update");
+    event->target = this;
     dispatchEvent(event);
     delete event;
     
@@ -69,28 +72,41 @@ void Manager::update()
             hitTriangle,
             Manager::ID_COMPONENT
         );
+        
+        event = NULL;
+
+        if (node)
+        {
+            map<ISceneNode*, IComponent*>::iterator it = components.find(node);
+
+            if (it != components.end())
+            {
+                event = new Event("intersect");
+                event->target = (*it).second;
+            }
+        }
 
         /* hit */
         while (node)
         {
-            event = new Event("intersect");
-
-            map<ISceneNode*, IComponent*>::iterator itComponent = components.find(node);
+            map<ISceneNode*, IComponent*>::iterator it = components.find(node);
             
             /* node belongs to a component */
-            if (itComponent != components.end())
+            if (it != components.end())
             {
-                (*itComponent).second->dispatchEvent(event);
+                if (event) (*it).second->dispatchEvent(event);
             }
 
             node = node->getParent();
 
             /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
-            if (!node)
+            if (!node && event)
             {
                 dispatchEvent(event);
-                delete event;
             }
+
         }
+        
+        if (event) delete event;
     }
 }

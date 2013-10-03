@@ -63,7 +63,8 @@ void update(Event *event)
 
 void intersect(Event *event)
 {
-    cout << event->type << endl;
+    ISceneNode *node = static_cast<IComponent*>(event->target)->getSceneNode();
+    cout << "target pos: " << node->getAbsolutePosition() << endl;
 }
 
 int main(int argc, char *argv[])
@@ -103,12 +104,11 @@ int main(int argc, char *argv[])
     gui3d->add(plane);
     plane->drop();
 
-    /*
     Plane *another = new Plane(dimension2df(640, 480));
-    another->getSceneNode()->setPosition(vector3df(0, 0, -1));
     gui3d->add(another);
+    // you can only get valid scene node after component added to the GUI manager */
+    another->getSceneNode()->setPosition(vector3df(0, 0, -1));
     another->drop();
-    */
 
     //smgr->addCubeSceneNode();
     ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 0.5, -2));

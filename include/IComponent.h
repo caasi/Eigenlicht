@@ -32,6 +32,8 @@ public:
 
     virtual IMesh *getMesh() { return NULL; }
 
+    virtual void setSceneNode(ISceneNode*) {}
+
     virtual ISceneNode *getSceneNode() { return NULL; }
 };
 

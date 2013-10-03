@@ -3,7 +3,8 @@
 using namespace eigen::event;
 
 Event::Event(string type):
-    type(type)
+    type(type),
+    target(NULL)
 {
 }
 

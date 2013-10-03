@@ -14,12 +14,14 @@ namespace eigen
 namespace interactable
 {
 
-class Component : virtual public IComponent
+class Component : public IComponent
 {
 public:
     Component():mesh(NULL),sceneNode(NULL) {}
 
     virtual IMesh *getMesh() { return mesh; }
+
+    virtual void setSceneNode(ISceneNode *node) { (sceneNode = node)->grab(); }
 
     virtual ISceneNode *getSceneNode() { return sceneNode; }
 
