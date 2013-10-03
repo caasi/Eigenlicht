@@ -23,7 +23,7 @@ using namespace interactable;
 namespace eigen
 {
 
-class Manager : public EventDispatcher, public IReferenceCounted
+class Manager : public IComponent
 {
 public:
     static const int ID_COMPONENT = 1 << 8;

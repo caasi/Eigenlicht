@@ -93,18 +93,25 @@ int main(int argc, char *argv[])
     gui3d->addEventListener("update", &update);
     gui3d->removeEventListener("update", &update);
     gui3d->addEventListener("update", &update);
+    gui3d->addEventListener("intersect", &intersect);
     if (gui3d->hasEventListener("update", &update))
     {
         cout << "ready" << endl;
     }
 
     Plane *plane = new Plane;
-    plane->addEventListener("intersect", &intersect);
     gui3d->add(plane);
     plane->drop();
 
+    /*
+    Plane *another = new Plane(dimension2df(640, 480));
+    another->getSceneNode()->setPosition(vector3df(0, 0, -1));
+    gui3d->add(another);
+    another->drop();
+    */
+
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 0.5, -1));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 0.5, -2));
     camera->setTarget(vector3df(0, 0, 0));
 
     line3df ray;

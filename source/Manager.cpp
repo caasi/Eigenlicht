@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <IMesh.h>
 #include <ITriangleSelector.h>
 
@@ -5,12 +7,11 @@
 #include "../include/Event.h"
 
 Manager::Manager(ISceneManager *mgr):
-    EventDispatcher(),
-    IReferenceCounted(),
-    smgr(mgr)
+    IComponent(),
+    smgr(mgr),
+    collmgr(smgr->getSceneCollisionManager())
 {
     smgr->grab();
-    collmgr = smgr->getSceneCollisionManager();
     collmgr->grab();
 }
 
@@ -51,7 +52,9 @@ void Manager::add(core::line3df *line)
 
 void Manager::update()
 {
-    dispatchEvent(new Event("update"));
+    Event *event = new Event("update");
+    dispatchEvent(event);
+    delete event;
     
     core::vector3df intersection;
     core::triangle3df hitTriangle;
@@ -68,14 +71,25 @@ void Manager::update()
         );
 
         /* hit */
-        if (node)
+        while (node)
         {
+            event = new Event("intersect");
+
             map<ISceneNode*, IComponent*>::iterator itComponent = components.find(node);
             
             /* node belongs to a component */
             if (itComponent != components.end())
             {
-                (*itComponent).second->dispatchEvent(new Event("intersect"));
+                (*itComponent).second->dispatchEvent(event);
+            }
+
+            node = node->getParent();
+
+            /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
+            if (!node)
+            {
+                dispatchEvent(event);
+                delete event;
             }
         }
     }

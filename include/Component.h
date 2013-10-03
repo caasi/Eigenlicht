@@ -17,7 +17,7 @@ namespace interactable
 class Component : virtual public IComponent
 {
 public:
-    Component():mesh(NULL) {}
+    Component():mesh(NULL),sceneNode(NULL) {}
 
     virtual IMesh *getMesh() { return mesh; }
 
