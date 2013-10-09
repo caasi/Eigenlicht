@@ -63,8 +63,12 @@ void update(Event *event)
 
 void intersect(Event *event)
 {
-    ISceneNode *node = static_cast<IComponent*>(event->target)->getSceneNode();
-    cout << "target pos: " << node->getAbsolutePosition() << endl;
+    IntersectEvent *e = dynamic_cast<IntersectEvent*>(event);
+
+    if (e)
+    {
+        cout << "intersection: " << e->intersection << endl;
+    }
 }
 
 int main(int argc, char *argv[])
@@ -90,6 +94,14 @@ int main(int argc, char *argv[])
     IGUIEnvironment *guienv = device->getGUIEnvironment();
     ISceneCollisionManager *collMan = smgr->getSceneCollisionManager();
 
+    ILightSceneNode * light = smgr->addLightSceneNode(
+                                0,
+                                vector3df(0, 2, -2),
+                                SColorf(1.0f, 1.0f, 1.0f, 1.0f),
+                                500.f
+                              );
+
+
     Manager *gui3d = new Manager(smgr);
     gui3d->addEventListener("update", &update);
     gui3d->removeEventListener("update", &update);
@@ -102,16 +114,17 @@ int main(int argc, char *argv[])
 
     Plane *plane = new Plane;
     gui3d->add(plane);
+    plane->getSceneNode()->setPosition(vector3df(0, 0, 0.25));
     plane->drop();
 
     Plane *another = new Plane(dimension2df(640, 480));
     gui3d->add(another);
     // you can only get valid scene node after component added to the GUI manager */
-    another->getSceneNode()->setPosition(vector3df(0, 0, -1));
+    another->getSceneNode()->setPosition(vector3df(0, 0, -0.25));
     another->drop();
 
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(0, 0.5, -2));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(-0.75, 0.2, -0.75));
     camera->setTarget(vector3df(0, 0, 0));
 
     line3df ray;

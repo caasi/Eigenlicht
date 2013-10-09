@@ -3,6 +3,7 @@
 
 #include "Manager.h"
 #include "Event.h"
+#include "IntersectEvent.h"
 #include "EventDispatcher.h"
 #include "IComponent.h"
 #include "Component.h"

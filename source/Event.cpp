@@ -10,5 +10,6 @@ Event::Event(string type):
 
 Event::~Event()
 {
+    target = NULL;
 }
 

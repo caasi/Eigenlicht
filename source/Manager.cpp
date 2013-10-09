@@ -1,11 +1,16 @@
 #include <iostream>
 
+#include <S3DVertex.h>
 #include <IMesh.h>
+#include <IMeshBuffer.h>
 #include <ITriangleSelector.h>
 
 #include "../include/Manager.h"
 #include "../include/Event.h"
+#include "../include/IntersectEvent.h"
 #include "../include/Component.h"
+
+using namespace irr::video;
 
 Manager::Manager(ISceneManager *mgr):
     IComponent(),
@@ -54,10 +59,13 @@ void Manager::add(core::line3df *line)
 
 void Manager::update()
 {
+    IntersectEvent *intersect_event = NULL;
+
     Event *event = new Event("update");
     event->target = this;
     dispatchEvent(event);
     delete event;
+    event = NULL;
     
     core::vector3df intersection;
     core::triangle3df hitTriangle;
@@ -73,16 +81,41 @@ void Manager::update()
             Manager::ID_COMPONENT
         );
         
-        event = NULL;
-
         if (node)
         {
             map<ISceneNode*, IComponent*>::iterator it = components.find(node);
 
             if (it != components.end())
             {
-                event = new Event("intersect");
-                event->target = (*it).second;
+                S3DVertex v_a, v_b, v_c;
+
+                IMesh *mesh = (*it).second->getMesh();
+                s32 buffer_len = mesh->getMeshBufferCount();
+                for (int i = 0; i < buffer_len; ++i)
+                {
+                    IMeshBuffer *buffer = mesh->getMeshBuffer(i);
+
+                    s32 vertices_len = buffer->getVertexCount();
+                    S3DVertex *vertices = static_cast<S3DVertex*>(buffer->getVertices());
+
+                    for (int j = 0; j < vertices_len; ++j)
+                    {
+                        core::vector3df pos = vertices[j].Pos;
+                        (*it).first->getAbsoluteTransformation().transformVect(pos);
+
+                        if (pos == hitTriangle.pointA) v_a = vertices[j];
+                        if (pos == hitTriangle.pointB) v_b = vertices[j];
+                        if (pos == hitTriangle.pointC) v_c = vertices[j];
+                    }
+                }
+
+                std::cout << v_c.TCoords.X << ", " << v_c.TCoords.Y << std::endl;
+
+                intersect_event = new IntersectEvent();
+                intersect_event->target = (*it).second;
+                intersect_event->intersection = intersection;
+                intersect_event->localIntersection = intersection;
+                intersect_event->hitTriangle = hitTriangle;
             }
         }
 
@@ -94,19 +127,19 @@ void Manager::update()
             /* node belongs to a component */
             if (it != components.end())
             {
-                if (event) (*it).second->dispatchEvent(event);
+                if (intersect_event) (*it).second->dispatchEvent(intersect_event);
             }
 
             node = node->getParent();
 
             /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
-            if (!node && event)
+            if (!node && intersect_event)
             {
-                dispatchEvent(event);
+                dispatchEvent(intersect_event);
             }
 
         }
         
-        if (event) delete event;
+        if (intersect_event) delete intersect_event;
     }
 }

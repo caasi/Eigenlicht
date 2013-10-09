@@ -10,9 +10,7 @@ using namespace std;
 #include <vector3d.h>
 #include <triangle3d.h>
 
-using namespace irr::core;
-
-ostream &operator<< (ostream &out, const matrix4 &m)
+ostream &operator<< (ostream &out, const irr::core::matrix4 &m)
 {
     out << "{" << endl;
 
@@ -28,7 +26,7 @@ ostream &operator<< (ostream &out, const matrix4 &m)
     return out;
 }
 
-ostream &operator<< (ostream &out, const vector3df &v)
+ostream &operator<< (ostream &out, const irr::core::vector3df &v)
 {
     return out << "{ "
                << setw(10) << setfill(' ') << v.X << ","
@@ -37,7 +35,7 @@ ostream &operator<< (ostream &out, const vector3df &v)
                << " }";
 }
 
-ostream &operator<< (ostream &out, const triangle3df &t)
+ostream &operator<< (ostream &out, const irr::core::triangle3df &t)
 {
     return out << "{" << endl
                << "\t" << t.pointA << endl

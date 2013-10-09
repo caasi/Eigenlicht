@@ -16,7 +16,7 @@ struct Event
 {
     Event(string);
 
-    ~Event();
+    virtual ~Event();
 
     string type;
 
