@@ -117,7 +117,7 @@ void Manager::update()
                 intersect_event->intersection = intersection;
 
                 // caculate intersection in uv coords
-                intersection = intersection - hitTriangle.pointA;
+                intersection -= hitTriangle.pointA;
                 core::vector3df vx = hitTriangle.pointB - hitTriangle.pointA;
                 core::vector3df vy = hitTriangle.pointC - hitTriangle.pointA;
                 core::vector3df vz = vx.crossProduct(vy).normalize();
@@ -130,8 +130,7 @@ void Manager::update()
                 vx = tb - ta;
                 vy = tc - ta;
                 vz = vx.crossProduct(vy).normalize();
-                m = Math::localMatrix(vx, vy, vz);
-                m.transformVect(intersection);
+                Math::localMatrix(vx, vy, vz).transformVect(intersection);
                 intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
 
                 intersect_event->hitTriangle = hitTriangle;
