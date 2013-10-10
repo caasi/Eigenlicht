@@ -7,6 +7,7 @@
 using namespace std;
 
 #include <matrix4.h>
+#include <vector2d.h>
 #include <vector3d.h>
 #include <triangle3d.h>
 
@@ -24,6 +25,14 @@ ostream &operator<< (ostream &out, const irr::core::matrix4 &m)
     out << "}";
 
     return out;
+}
+
+ostream &operator<< (ostream &out, const irr::core::vector2df &v)
+{
+    return out << "{ "
+               << setw(10) << setfill(' ') << v.X << ","
+               << setw(10) << setfill(' ') << v.Y
+               << " }";
 }
 
 ostream &operator<< (ostream &out, const irr::core::vector3df &v)

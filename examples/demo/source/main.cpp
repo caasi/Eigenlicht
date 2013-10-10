@@ -67,7 +67,9 @@ void intersect(Event *event)
 
     if (e)
     {
+        cout << "triangle: " << e->hitTriangle << endl;
         cout << "intersection: " << e->intersection << endl;
+        cout << "uv: " << e->uv << endl;
     }
 }
 

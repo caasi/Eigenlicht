@@ -109,12 +109,35 @@ void Manager::update()
                     }
                 }
 
-                std::cout << v_c.TCoords.X << ", " << v_c.TCoords.Y << std::endl;
+                //std::cout << v_c.TCoords.X << ", " << v_c.TCoords.Y << std::endl;
 
                 intersect_event = new IntersectEvent();
                 intersect_event->target = (*it).second;
                 intersect_event->intersection = intersection;
-                intersect_event->localIntersection = intersection;
+
+                // caculate intersection in uv coords
+                core::vector3df vc = hitTriangle.pointB - hitTriangle.pointA;
+                core::vector3df vb = hitTriangle.pointC - hitTriangle.pointA;
+                core::vector3df vn = vc.crossProduct(vb).normalize();
+                core::matrix4 m, inverted;
+                m[0] = vc.X; m[4] = vb.X; m[ 8] = vn.X;
+                m[1] = vc.Y; m[5] = vb.Y; m[ 9] = vn.Y;
+                m[2] = vc.Z; m[6] = vb.Z; m[10] = vn.Z;
+                m.getInverse(inverted);
+                inverted.transformVect(intersection);
+                core::vector3df ta = core::vector3df(v_a.TCoords.X, v_a.TCoords.Y, 0);
+                core::vector3df tb = core::vector3df(v_b.TCoords.X, v_b.TCoords.Y, 0);
+                core::vector3df tc = core::vector3df(v_c.TCoords.X, v_c.TCoords.Y, 0);
+                vc = tb - ta;
+                vb = tc - ta;
+                vn = vc.crossProduct(vb).normalize();
+                m.makeIdentity();
+                m[0] = vc.X; m[4] = vb.X; m[ 8] = vn.X;
+                m[1] = vc.Y; m[5] = vb.Y; m[ 9] = vn.Y;
+                m[2] = vc.Z; m[6] = vb.Z; m[10] = vn.Z;
+                m.transformVect(intersection);
+                intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
+
                 intersect_event->hitTriangle = hitTriangle;
             }
         }

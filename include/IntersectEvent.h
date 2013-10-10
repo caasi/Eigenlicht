@@ -16,7 +16,7 @@ struct IntersectEvent : public Event
 {
     IntersectEvent():Event("intersect") {}
     core::vector3df intersection;
-    core::vector3df localIntersection;
+    core::vector2df uv;
     core::triangle3df hitTriangle;
 };
 
