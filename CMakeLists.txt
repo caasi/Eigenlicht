@@ -16,6 +16,7 @@ include_directories (
 add_library (
   Eigenlicht
   STATIC
+  ${EIGENLICHT_SOURCE_DIR}/Math.cpp
   ${EIGENLICHT_SOURCE_DIR}/Manager.cpp
   ${EIGENLICHT_SOURCE_DIR}/Event.cpp
   ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp

@@ -1,6 +1,7 @@
 #ifndef __EIGENLICHT_H__
 #define __EIGENLICHT_H__
 
+#include "Math.h"
 #include "Manager.h"
 #include "Event.h"
 #include "IntersectEvent.h"

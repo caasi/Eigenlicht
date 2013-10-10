@@ -5,6 +5,7 @@
 #include <IMeshBuffer.h>
 #include <ITriangleSelector.h>
 
+#include "../include/Math.h"
 #include "../include/Manager.h"
 #include "../include/Event.h"
 #include "../include/IntersectEvent.h"
@@ -117,25 +118,19 @@ void Manager::update()
 
                 // caculate intersection in uv coords
                 intersection = intersection - hitTriangle.pointA;
-                core::vector3df vc = hitTriangle.pointB - hitTriangle.pointA;
-                core::vector3df vb = hitTriangle.pointC - hitTriangle.pointA;
-                core::vector3df vn = vc.crossProduct(vb).normalize();
-                core::matrix4 m, inverted;
-                m[0] = vc.X; m[4] = vb.X; m[ 8] = vn.X;
-                m[1] = vc.Y; m[5] = vb.Y; m[ 9] = vn.Y;
-                m[2] = vc.Z; m[6] = vb.Z; m[10] = vn.Z;
+                core::vector3df vx = hitTriangle.pointB - hitTriangle.pointA;
+                core::vector3df vy = hitTriangle.pointC - hitTriangle.pointA;
+                core::vector3df vz = vx.crossProduct(vy).normalize();
+                core::matrix4 m = Math::localMatrix(vx, vy, vz), inverted;
                 m.getInverse(inverted);
                 inverted.transformVect(intersection);
                 core::vector3df ta = core::vector3df(v_a.TCoords.X, v_a.TCoords.Y, 0);
                 core::vector3df tb = core::vector3df(v_b.TCoords.X, v_b.TCoords.Y, 0);
                 core::vector3df tc = core::vector3df(v_c.TCoords.X, v_c.TCoords.Y, 0);
-                vc = tb - ta;
-                vb = tc - ta;
-                vn = vc.crossProduct(vb).normalize();
-                m.makeIdentity();
-                m[0] = vc.X; m[4] = vb.X; m[ 8] = vn.X;
-                m[1] = vc.Y; m[5] = vb.Y; m[ 9] = vn.Y;
-                m[2] = vc.Z; m[6] = vb.Z; m[10] = vn.Z;
+                vx = tb - ta;
+                vy = tc - ta;
+                vz = vx.crossProduct(vy).normalize();
+                m = Math::localMatrix(vx, vy, vz);
                 m.transformVect(intersection);
                 intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
 
