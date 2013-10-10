@@ -124,7 +124,8 @@ int main(int argc, char *argv[])
     Plane *another = new Plane(dimension2df(640, 480));
     gui3d->add(another);
     // you can only get valid scene node after component added to the GUI manager */
-    another->getSceneNode()->setPosition(vector3df(0, 0, -0.25));
+    another->getSceneNode()->setPosition(vector3df(0.25, 0, -0.25));
+    another->getSceneNode()->setRotation(vector3df(0, 90, 0));
     another->drop();
 
     //smgr->addCubeSceneNode();

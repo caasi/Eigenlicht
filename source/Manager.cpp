@@ -116,6 +116,7 @@ void Manager::update()
                 intersect_event->intersection = intersection;
 
                 // caculate intersection in uv coords
+                intersection = intersection - hitTriangle.pointA;
                 core::vector3df vc = hitTriangle.pointB - hitTriangle.pointA;
                 core::vector3df vb = hitTriangle.pointC - hitTriangle.pointA;
                 core::vector3df vn = vc.crossProduct(vb).normalize();
