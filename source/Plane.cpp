@@ -1,23 +1,22 @@
 #include <SMesh.h>
 #include <SMeshBuffer.h>
+#include "../include/Math.h"
+#include "../include/Plane.h"
 
 using namespace irr;
 using namespace scene;
 using namespace video;
 
-#include "../include/Plane.h"
-
 using namespace eigen;
 using namespace interactable;
 
-/* 1280 x 720 72dpi screen in meters */
 Plane::Plane(core::dimension2df size, f32 dpi):
     Component(),
     size(size),
     dpi(dpi)
 {
-    f32 width = size.Width / dpi * 0.0254,
-        height = size.Height / dpi * 0.0254;
+    f32 width  = size.Width  / dpi * Math::INCH_PER_METER,
+        height = size.Height / dpi * Math::INCH_PER_METER;
 
     S3DVertex vertices[4];
 

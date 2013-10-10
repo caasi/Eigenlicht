@@ -12,6 +12,8 @@ namespace eigen
 class Math
 {
 public:
+    const static f32 INCH_PER_METER = 0.0254;
+
     static core::matrix4 localMatrix(const core::vector3df&, const core::vector3df&, const core::vector3df&);
 };
 
