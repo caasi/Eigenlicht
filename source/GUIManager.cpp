@@ -64,6 +64,24 @@ void GUIManager::add(core::line3df *line)
     lines.push_back(line);
 }
 
+void GUIManager::bubbleUp(ISceneNode *node, Event *event)
+{
+    if (!event) return;
+
+    while (node)
+    {
+        map<ISceneNode*, IComponent*>::iterator it = components.find(node);
+        
+        if (it != components.end())
+            (*it).second->EventDispatcher::dispatchEvent(event);
+
+        node = node->getParent();
+
+        /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
+        if (!node) dispatchEvent(event);
+    }
+}
+
 void GUIManager::update()
 {
     IntersectEvent *intersect_event = NULL;
@@ -141,29 +159,10 @@ void GUIManager::update()
 
                 intersect_event->hitTriangle = hitTriangle;
             }
+
+            bubbleUp(node, intersect_event);
+
+            if (intersect_event) delete intersect_event;
         }
-
-        /* hit */
-        while (node)
-        {
-            map<ISceneNode*, IComponent*>::iterator it = components.find(node);
-            
-            /* node belongs to a component */
-            if (it != components.end())
-            {
-                if (intersect_event) (*it).second->dispatchEvent(intersect_event);
-            }
-
-            node = node->getParent();
-
-            /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
-            if (!node && intersect_event)
-            {
-                dispatchEvent(intersect_event);
-            }
-
-        }
-        
-        if (intersect_event) delete intersect_event;
     }
 }

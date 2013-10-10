@@ -26,6 +26,14 @@ public:
         if (mgr) mgr->drop();
     }
 
+    virtual void dispatchEvent(Event *event)
+    {
+        if (mgr)
+            mgr->bubbleUp(sceneNode, event);
+        else
+            EventDispatcher::dispatchEvent(event);
+    }
+
     virtual IMesh *getMesh() { return mesh; }
 
     virtual path getTexturePath() { return texturePath; }

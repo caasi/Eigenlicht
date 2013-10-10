@@ -38,6 +38,14 @@ public:
 
     void add(core::line3df*);
 
+    /**
+     * bubbleUP
+     **
+     * I need this method, because the tree is managed by scene node,
+     * and I have to loop up component from that tree
+     */
+    void bubbleUp(ISceneNode*, Event*);
+
     void update();
 private:
     ISceneManager *smgr;

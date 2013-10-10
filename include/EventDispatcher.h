@@ -19,15 +19,15 @@ class EventDispatcher
 public:
     EventDispatcher();
 
-    ~EventDispatcher();
+    virtual ~EventDispatcher();
 
-    void dispatchEvent(Event*);
+    virtual void dispatchEvent(Event*);
 
-    bool hasEventListener(string, void (*listener)(Event*));
+    virtual bool hasEventListener(string, void (*listener)(Event*));
 
-    void addEventListener(string, void (*listener)(Event*));
+    virtual void addEventListener(string, void (*listener)(Event*));
 
-    bool removeEventListener(string, void (*listener)(Event*));
+    virtual bool removeEventListener(string, void (*listener)(Event*));
 
 private:
     map< string, vector< void (*)(Event*) >* > eventListenerList;
