@@ -2,7 +2,7 @@
 #define __EIGENLICHT_H__
 
 #include "Math.h"
-#include "Manager.h"
+#include "GUIManager.h"
 #include "Event.h"
 #include "IntersectEvent.h"
 #include "EventDispatcher.h"

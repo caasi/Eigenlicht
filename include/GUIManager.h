@@ -1,5 +1,5 @@
-#ifndef __EIGENLICHT_MANAGER_H__
-#define __EIGENLICHT_MANAGER_H__
+#ifndef __EIGENLICHT_GUI_MANAGER_H__
+#define __EIGENLICHT_GUI_MANAGER_H__
 
 #include <map>
 #include <vector>
@@ -23,14 +23,14 @@ using namespace interactable;
 namespace eigen
 {
 
-class Manager : public IComponent
+class GUIManager : public IComponent
 {
 public:
     static const int ID_COMPONENT = 1 << 8;
 
-    Manager(ISceneManager*);
+    GUIManager(ISceneManager*);
 
-    ~Manager();
+    ~GUIManager();
 
     void add(IComponent*);
 

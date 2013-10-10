@@ -7,14 +7,14 @@
 #include <ITriangleSelector.h>
 
 #include "../include/Math.h"
-#include "../include/Manager.h"
+#include "../include/GUIManager.h"
 #include "../include/Event.h"
 #include "../include/IntersectEvent.h"
 #include "../include/Component.h"
 
 using namespace irr::video;
 
-Manager::Manager(ISceneManager *mgr):
+GUIManager::GUIManager(ISceneManager *mgr):
     IComponent(),
     smgr(mgr),
     collmgr(smgr->getSceneCollisionManager())
@@ -23,7 +23,7 @@ Manager::Manager(ISceneManager *mgr):
     collmgr->grab();
 }
 
-Manager::~Manager()
+GUIManager::~GUIManager()
 {
     for (map<ISceneNode*, IComponent*>::iterator it = components.begin(); it != components.end(); ++it)
     {
@@ -34,11 +34,11 @@ Manager::~Manager()
     if (smgr) smgr->drop();
 }
 
-void Manager::add(IComponent *component)
+void GUIManager::add(IComponent *component)
 {
     IVideoDriver *driver = smgr->getVideoDriver();
     IMesh *mesh = component->getMesh();
-    ISceneNode *node = smgr->addMeshSceneNode(mesh, 0, Manager::ID_COMPONENT);
+    ISceneNode *node = smgr->addMeshSceneNode(mesh, 0, GUIManager::ID_COMPONENT);
     ITriangleSelector *selector = smgr->createTriangleSelector(mesh, node);
     node->setMaterialFlag(EMF_BACK_FACE_CULLING, false);
     node->setMaterialTexture(0, driver->getTexture(component->getTexturePath()));
@@ -52,18 +52,18 @@ void Manager::add(IComponent *component)
     component->setSceneNode(node);
 }
 
-bool Manager::remove(IComponent *component)
+bool GUIManager::remove(IComponent *component)
 {
     /* TODO */
     return false;
 }
 
-void Manager::add(core::line3df *line)
+void GUIManager::add(core::line3df *line)
 {
     lines.push_back(line);
 }
 
-void Manager::update()
+void GUIManager::update()
 {
     IntersectEvent *intersect_event = NULL;
 
@@ -84,7 +84,7 @@ void Manager::update()
             line,
             intersection,
             hitTriangle,
-            Manager::ID_COMPONENT
+            GUIManager::ID_COMPONENT
         );
         
         if (node)

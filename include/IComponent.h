@@ -24,6 +24,9 @@ using namespace eigen::event;
 
 namespace eigen
 {
+
+class GUIManager;
+
 namespace interactable
 {
 
@@ -37,6 +40,8 @@ public:
     virtual path getTexturePath() { return ""; }
 
     virtual void setSceneNode(ISceneNode*) {}
+
+    virtual void setGUIManager(GUIManager*) {}
 
     virtual ISceneNode *getSceneNode() { return NULL; }
 };

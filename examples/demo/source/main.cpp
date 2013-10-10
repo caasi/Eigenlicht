@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
                               );
 
 
-    Manager *gui3d = new Manager(smgr);
+    GUIManager *gui3d = new GUIManager(smgr);
     gui3d->addEventListener("update", &update);
     gui3d->removeEventListener("update", &update);
     gui3d->addEventListener("update", &update);
