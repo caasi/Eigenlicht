@@ -2,6 +2,7 @@
 #define __EIGENLICHT_PLANE_H__
 
 #include <dimension2d.h>
+#include <vector2d.h>
 #include <vector3d.h>
 
 #include "Component.h"
@@ -21,13 +22,11 @@ public:
 
     ~Plane();
 
-    vector3df getUpVector() { return upVector; }
-
-    vector3df getTargetVector() { return targetVector; }
+    vector2df getPointFromUV(const vector2df &uv);
 
 private:
-    vector3df upVector;
-    vector3df targetVector;
+    dimension2df size;
+    f32 dpi;
 };
 
 }

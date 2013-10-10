@@ -64,12 +64,14 @@ void update(Event *event)
 void intersect(Event *event)
 {
     IntersectEvent *e = dynamic_cast<IntersectEvent*>(event);
+    Plane *p = static_cast<Plane*>(e->target);
 
     if (e)
     {
         cout << "triangle: " << e->hitTriangle << endl;
         cout << "intersection: " << e->intersection << endl;
         cout << "uv: " << e->uv << endl;
+        cout << "hit: " << p->getPointFromUV(e->uv) << endl;
     }
 }
 
