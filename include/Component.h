@@ -29,7 +29,7 @@ public:
     virtual void dispatchEvent(Event *event)
     {
         if (mgr)
-            mgr->bubbleUp(sceneNode, event);
+            mgr->bubbleUp(this, event);
         else
             EventDispatcher::dispatchEvent(event);
     }

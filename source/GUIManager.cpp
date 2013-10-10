@@ -27,8 +27,8 @@ GUIManager::~GUIManager()
 {
     for (map<ISceneNode*, IComponent*>::iterator it = components.begin(); it != components.end(); ++it)
     {
-        it->first->drop();
-        it->second->drop();
+        (*it).first->drop();
+        (*it).second->drop();
     }
     if (collmgr) collmgr->drop();
     if (smgr) smgr->drop();
@@ -64,22 +64,30 @@ void GUIManager::add(core::line3df *line)
     lines.push_back(line);
 }
 
-void GUIManager::bubbleUp(ISceneNode *node, Event *event)
+IComponent *GUIManager::getComponentForSceneNode(ISceneNode *node)
+{
+    map<ISceneNode*, IComponent*>::iterator it = components.find(node);
+    if (it != components.end()) return (*it).second;
+    return NULL;
+}
+
+void GUIManager::bubbleUp(IComponent *comp, Event *event)
 {
     if (!event) return;
 
-    while (node)
+    ISceneNode *node = comp ? comp->getSceneNode() : NULL;
+
+    do
     {
-        map<ISceneNode*, IComponent*>::iterator it = components.find(node);
+        if (comp)
+            comp->EventDispatcher::dispatchEvent(event);
         
-        if (it != components.end())
-            (*it).second->EventDispatcher::dispatchEvent(event);
-
         node = node->getParent();
+        comp = getComponentForSceneNode(node);
+    } while (node);
 
-        /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
-        if (!node) dispatchEvent(event);
-    }
+    /* it's hard to cast ISceneManager to ISceneNode even if CSceneManager is a ISceneNode */
+    dispatchEvent(event);
 }
 
 void GUIManager::update()
@@ -112,9 +120,10 @@ void GUIManager::update()
 
             if (it != components.end())
             {
+                IComponent *comp = (*it).second;
                 S3DVertex v_a, v_b, v_c;
 
-                IMesh *mesh = (*it).second->getMesh();
+                IMesh *mesh = comp->getMesh();
                 s32 buffer_len = mesh->getMeshBufferCount();
                 for (int i = 0; i < buffer_len; ++i)
                 {
@@ -137,7 +146,7 @@ void GUIManager::update()
                 //std::cout << v_c.TCoords.X << ", " << v_c.TCoords.Y << std::endl;
 
                 intersect_event = new IntersectEvent();
-                intersect_event->target = (*it).second;
+                intersect_event->target = comp;
                 intersect_event->intersection = intersection;
 
                 // caculate intersection in uv coords
@@ -158,11 +167,13 @@ void GUIManager::update()
                 intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
 
                 intersect_event->hitTriangle = hitTriangle;
+            
+                bubbleUp(comp, intersect_event);
             }
-
-            bubbleUp(node, intersect_event);
 
             if (intersect_event) delete intersect_event;
         }
+
+        /* TODO: bounding box and near event */
     }
 }
