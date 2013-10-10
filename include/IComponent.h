@@ -35,6 +35,8 @@ class IComponent : public IReferenceCounted, public EventDispatcher
 public:
     IComponent():IReferenceCounted() {}
 
+    virtual ~IComponent() {}
+
     virtual IMesh *getMesh() { return NULL; }
 
     virtual path getTexturePath() { return ""; }

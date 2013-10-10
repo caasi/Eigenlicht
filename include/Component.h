@@ -5,6 +5,7 @@
 #include <ISceneNode.h>
 
 #include "IComponent.h"
+#include "GUIManager.h"
 
 using namespace irr;
 using namespace scene;
@@ -17,13 +18,29 @@ namespace interactable
 class Component : public IComponent
 {
 public:
-    Component(path texture = ""):mesh(NULL),sceneNode(NULL),texturePath(texture) {}
+    Component(path texture = ""):mesh(NULL),sceneNode(NULL),mgr(NULL),texturePath(texture) {}
+
+    virtual ~Component()
+    {
+        if (sceneNode) sceneNode->drop();
+        if (mgr) mgr->drop();
+    }
 
     virtual IMesh *getMesh() { return mesh; }
 
     virtual path getTexturePath() { return texturePath; }
 
-    virtual void setSceneNode(ISceneNode *node) { (sceneNode = node)->grab(); }
+    virtual void setSceneNode(ISceneNode *node)
+    {
+        if (sceneNode) sceneNode->drop();
+        (sceneNode = node)->grab();
+    }
+
+    virtual void setGUIManager(GUIManager *manager)
+    {
+        if (mgr) mgr->drop();
+        (mgr = manager)->grab();
+    }
 
     virtual ISceneNode *getSceneNode() { return sceneNode; }
 
@@ -36,6 +53,7 @@ protected:
     SMesh *mesh;
     path texturePath;
     ISceneNode *sceneNode;
+    GUIManager *mgr;
 };
 
 }

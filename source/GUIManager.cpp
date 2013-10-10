@@ -50,6 +50,7 @@ void GUIManager::add(IComponent *component)
     components.insert(pair<ISceneNode*, IComponent*>(node, component));
     component->grab();
     component->setSceneNode(node);
+    component->setGUIManager(this);
 }
 
 bool GUIManager::remove(IComponent *component)
