@@ -18,7 +18,11 @@ namespace interactable
 class Plane : public Component
 {
 public:
-    Plane(dimension2df size = dimension2df(1920, 1080), f32 dpi = 72.0);
+    Plane(
+        dimension2df size = dimension2df(1280, 800),
+        f32 dpi = 72.0,
+        path texture = "../media/background_white.png"
+    );
 
     ~Plane();
 

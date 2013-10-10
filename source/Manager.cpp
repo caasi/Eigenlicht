@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <IVideoDriver.h>
 #include <S3DVertex.h>
 #include <IMesh.h>
 #include <IMeshBuffer.h>
@@ -35,9 +36,13 @@ Manager::~Manager()
 
 void Manager::add(IComponent *component)
 {
+    IVideoDriver *driver = smgr->getVideoDriver();
     IMesh *mesh = component->getMesh();
     ISceneNode *node = smgr->addMeshSceneNode(mesh, 0, Manager::ID_COMPONENT);
     ITriangleSelector *selector = smgr->createTriangleSelector(mesh, node);
+    node->setMaterialFlag(EMF_BACK_FACE_CULLING, false);
+    node->setMaterialTexture(0, driver->getTexture(component->getTexturePath()));
+    node->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
 
     node->setTriangleSelector(selector);
     selector->drop();

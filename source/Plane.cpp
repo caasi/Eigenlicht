@@ -10,8 +10,8 @@ using namespace video;
 using namespace eigen;
 using namespace interactable;
 
-Plane::Plane(core::dimension2df size, f32 dpi):
-    Component(),
+Plane::Plane(core::dimension2df size, f32 dpi, path texture):
+    Component(texture),
     size(size),
     dpi(dpi)
 {

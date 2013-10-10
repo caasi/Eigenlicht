@@ -68,8 +68,6 @@ void intersect(Event *event)
 
     if (e)
     {
-        cout << "triangle: " << e->hitTriangle << endl;
-        cout << "intersection: " << e->intersection << endl;
         cout << "uv: " << e->uv << endl;
         cout << "hit: " << p->getPointFromUV(e->uv) << endl;
     }
@@ -81,7 +79,7 @@ int main(int argc, char *argv[])
 
     IrrlichtDevice *device = createDevice(
         video::EDT_OPENGL,
-        dimension2d<u32>(640, 480),
+        dimension2d<u32>(800, 600),
         16,
         false,
         false,
@@ -129,8 +127,8 @@ int main(int argc, char *argv[])
     another->drop();
 
     //smgr->addCubeSceneNode();
-    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(-0.75, 0.2, -0.75));
-    camera->setTarget(vector3df(0, 0, 0));
+    ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(-0.5, 0.2, -0.5));
+    camera->setTarget(vector3df(0, 0, -0.25));
 
     line3df ray;
     gui3d->add(&ray);

@@ -17,9 +17,11 @@ namespace interactable
 class Component : public IComponent
 {
 public:
-    Component():mesh(NULL),sceneNode(NULL) {}
+    Component(path texture = ""):mesh(NULL),sceneNode(NULL),texturePath(texture) {}
 
     virtual IMesh *getMesh() { return mesh; }
+
+    virtual path getTexturePath() { return texturePath; }
 
     virtual void setSceneNode(ISceneNode *node) { (sceneNode = node)->grab(); }
 
@@ -32,6 +34,7 @@ protected:
      * from ray
      **/
     SMesh *mesh;
+    path texturePath;
     ISceneNode *sceneNode;
 };
 
