@@ -24,7 +24,9 @@ public:
         path texture = "../media/background_white.png"
     );
 
-    ~Plane();
+    virtual ~Plane();
+
+    virtual ISceneNode *createSceneNode(ISceneManager*);
 
     vector2df getPointFromUV(const vector2df &uv);
 

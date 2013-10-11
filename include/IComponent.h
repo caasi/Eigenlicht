@@ -11,6 +11,7 @@ namespace scene
 {
 
 class IMesh;
+class ISceneManager;
 class ISceneNode;
 
 }
@@ -41,11 +42,13 @@ public:
 
     virtual path getTexturePath() { return ""; }
 
+    virtual ISceneNode *createSceneNode(ISceneManager*) = 0;
+
     virtual void setSceneNode(ISceneNode*) {}
 
-    virtual void setGUIManager(GUIManager*) {}
-
     virtual ISceneNode *getSceneNode() { return NULL; }
+
+    virtual void setGUIManager(GUIManager*) {}
 };
 
 }

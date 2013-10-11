@@ -1,5 +1,6 @@
 #include <SMesh.h>
 #include <SMeshBuffer.h>
+#include <IVideoDriver.h>
 #include "../include/Math.h"
 #include "../include/Plane.h"
 
@@ -47,6 +48,21 @@ Plane::Plane(core::dimension2df size, f32 dpi, path texture):
 Plane::~Plane()
 {
     if (mesh) mesh->drop();
+}
+
+ISceneNode *Plane::createSceneNode(ISceneManager *smgr)
+{
+    sceneNode = smgr->addMeshSceneNode(mesh, 0, GUIManager::ID_COMPONENT);
+    sceneNode->grab();
+
+    ITriangleSelector *selector = smgr->createTriangleSelector(mesh, sceneNode);
+    sceneNode->setMaterialFlag(EMF_BACK_FACE_CULLING, false);
+    sceneNode->setMaterialTexture(0, smgr->getVideoDriver()->getTexture(getTexturePath()));
+    sceneNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+    sceneNode->setTriangleSelector(selector);
+    selector->drop();
+
+    return sceneNode;
 }
 
 vector2df Plane::getPointFromUV(const vector2df &uv)

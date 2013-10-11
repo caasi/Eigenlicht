@@ -32,6 +32,8 @@ public:
 
     ~GUIManager();
 
+    ISceneNode *createSceneNode(ISceneManager *smgr) { return NULL; }
+
     void add(IComponent*);
 
     bool remove(IComponent*);

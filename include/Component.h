@@ -44,13 +44,13 @@ public:
         (sceneNode = node)->grab();
     }
 
+    virtual ISceneNode *getSceneNode() { return sceneNode; }
+
     virtual void setGUIManager(GUIManager *manager)
     {
         if (mgr) mgr->drop();
         (mgr = manager)->grab();
     }
-
-    virtual ISceneNode *getSceneNode() { return sceneNode; }
 
 protected:
     /**

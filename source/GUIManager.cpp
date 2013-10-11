@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include <IVideoDriver.h>
 #include <S3DVertex.h>
 #include <IMesh.h>
 #include <IMeshBuffer.h>
@@ -36,21 +35,17 @@ GUIManager::~GUIManager()
 
 void GUIManager::add(IComponent *component)
 {
-    IVideoDriver *driver = smgr->getVideoDriver();
-    IMesh *mesh = component->getMesh();
-    ISceneNode *node = smgr->addMeshSceneNode(mesh, 0, GUIManager::ID_COMPONENT);
-    ITriangleSelector *selector = smgr->createTriangleSelector(mesh, node);
-    node->setMaterialFlag(EMF_BACK_FACE_CULLING, false);
-    node->setMaterialTexture(0, driver->getTexture(component->getTexturePath()));
-    node->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+    ISceneNode *node = component->getSceneNode();
 
-    node->setTriangleSelector(selector);
-    selector->drop();
+    if (!node) node = component->createSceneNode(smgr);
 
-    components.insert(pair<ISceneNode*, IComponent*>(node, component));
-    component->grab();
-    component->setSceneNode(node);
-    component->setGUIManager(this);
+    if (node)
+    {
+        components.insert(pair<ISceneNode*, IComponent*>(node, component));
+        node->grab();
+        component->grab();
+        component->setGUIManager(this);
+    }
 }
 
 bool GUIManager::remove(IComponent *component)
