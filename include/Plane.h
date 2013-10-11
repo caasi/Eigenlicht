@@ -4,11 +4,14 @@
 #include <dimension2d.h>
 #include <vector2d.h>
 #include <vector3d.h>
+#include <irrString.h>
 
 #include "Component.h"
 
 using namespace irr;
 using namespace core;
+using namespace scene;
+using namespace io;
 
 namespace eigen
 {
@@ -33,6 +36,7 @@ public:
 private:
     dimension2df size;
     f32 dpi;
+    path texturePath;
 };
 
 }

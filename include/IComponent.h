@@ -2,7 +2,6 @@
 #define __EIGENLICHT_INTERFACE_COMPONENT_H__
 
 #include <IReferenceCounted.h>
-#include <irrString.h>
 #include "EventDispatcher.h"
 
 namespace irr
@@ -19,7 +18,6 @@ class ISceneNode;
 
 using namespace irr;
 using namespace scene;
-using namespace io;
 
 using namespace eigen::event;
 
@@ -40,11 +38,7 @@ public:
 
     virtual IMesh *getMesh() { return NULL; }
 
-    virtual path getTexturePath() { return ""; }
-
     virtual ISceneNode *createSceneNode(ISceneManager*) = 0;
-
-    virtual void setSceneNode(ISceneNode*) {}
 
     virtual ISceneNode *getSceneNode() { return NULL; }
 

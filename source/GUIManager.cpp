@@ -3,6 +3,7 @@
 #include <S3DVertex.h>
 #include <IMesh.h>
 #include <IMeshBuffer.h>
+#include <IMeshSceneNode.h>
 #include <ITriangleSelector.h>
 
 #include "../include/Math.h"
@@ -119,51 +120,59 @@ void GUIManager::update()
                 S3DVertex v_a, v_b, v_c;
 
                 IMesh *mesh = comp->getMesh();
-                s32 buffer_len = mesh->getMeshBufferCount();
-                for (int i = 0; i < buffer_len; ++i)
+
+                /**
+                 * TODO
+                 **
+                 * can't down cast scene node to mesh scene node now,
+                 * may get NULL if component has multiple components or scene nodes.
+                 **/
+                if (mesh)
                 {
-                    IMeshBuffer *buffer = mesh->getMeshBuffer(i);
-
-                    s32 vertices_len = buffer->getVertexCount();
-                    S3DVertex *vertices = static_cast<S3DVertex*>(buffer->getVertices());
-
-                    for (int j = 0; j < vertices_len; ++j)
+                    s32 buffer_len = mesh->getMeshBufferCount();
+                    for (int i = 0; i < buffer_len; ++i)
                     {
-                        core::vector3df pos = vertices[j].Pos;
-                        (*it).first->getAbsoluteTransformation().transformVect(pos);
+                        IMeshBuffer *buffer = mesh->getMeshBuffer(i);
 
-                        if (pos == hitTriangle.pointA) v_a = vertices[j];
-                        if (pos == hitTriangle.pointB) v_b = vertices[j];
-                        if (pos == hitTriangle.pointC) v_c = vertices[j];
+                        s32 vertices_len = buffer->getVertexCount();
+                        S3DVertex *vertices = static_cast<S3DVertex*>(buffer->getVertices());
+
+                        for (int j = 0; j < vertices_len; ++j)
+                        {
+                            core::vector3df pos = vertices[j].Pos;
+                            node->getAbsoluteTransformation().transformVect(pos);
+
+                            if (pos == hitTriangle.pointA) v_a = vertices[j];
+                            if (pos == hitTriangle.pointB) v_b = vertices[j];
+                            if (pos == hitTriangle.pointC) v_c = vertices[j];
+                        }
                     }
+
+                    intersect_event = new IntersectEvent();
+                    intersect_event->target = comp;
+                    intersect_event->intersection = intersection;
+
+                    // caculate intersection in uv coords
+                    intersection -= hitTriangle.pointA;
+                    core::vector3df vx = hitTriangle.pointB - hitTriangle.pointA;
+                    core::vector3df vy = hitTriangle.pointC - hitTriangle.pointA;
+                    core::vector3df vz = vx.crossProduct(vy).normalize();
+                    core::matrix4 m = Math::localMatrix(vx, vy, vz), inverted;
+                    m.getInverse(inverted);
+                    inverted.transformVect(intersection);
+                    core::vector3df ta = core::vector3df(v_a.TCoords.X, v_a.TCoords.Y, 0);
+                    core::vector3df tb = core::vector3df(v_b.TCoords.X, v_b.TCoords.Y, 0);
+                    core::vector3df tc = core::vector3df(v_c.TCoords.X, v_c.TCoords.Y, 0);
+                    vx = tb - ta;
+                    vy = tc - ta;
+                    vz = vx.crossProduct(vy).normalize();
+                    Math::localMatrix(vx, vy, vz).transformVect(intersection);
+                    intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
+
+                    intersect_event->hitTriangle = hitTriangle;
+                
+                    bubbleUp(comp, intersect_event);
                 }
-
-                //std::cout << v_c.TCoords.X << ", " << v_c.TCoords.Y << std::endl;
-
-                intersect_event = new IntersectEvent();
-                intersect_event->target = comp;
-                intersect_event->intersection = intersection;
-
-                // caculate intersection in uv coords
-                intersection -= hitTriangle.pointA;
-                core::vector3df vx = hitTriangle.pointB - hitTriangle.pointA;
-                core::vector3df vy = hitTriangle.pointC - hitTriangle.pointA;
-                core::vector3df vz = vx.crossProduct(vy).normalize();
-                core::matrix4 m = Math::localMatrix(vx, vy, vz), inverted;
-                m.getInverse(inverted);
-                inverted.transformVect(intersection);
-                core::vector3df ta = core::vector3df(v_a.TCoords.X, v_a.TCoords.Y, 0);
-                core::vector3df tb = core::vector3df(v_b.TCoords.X, v_b.TCoords.Y, 0);
-                core::vector3df tc = core::vector3df(v_c.TCoords.X, v_c.TCoords.Y, 0);
-                vx = tb - ta;
-                vy = tc - ta;
-                vz = vx.crossProduct(vy).normalize();
-                Math::localMatrix(vx, vy, vz).transformVect(intersection);
-                intersect_event->uv = core::vector2df(intersection.X, intersection.Y);
-
-                intersect_event->hitTriangle = hitTriangle;
-            
-                bubbleUp(comp, intersect_event);
             }
 
             if (intersect_event) delete intersect_event;

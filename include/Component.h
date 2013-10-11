@@ -18,7 +18,7 @@ namespace interactable
 class Component : public IComponent
 {
 public:
-    Component(path texture = ""):mesh(NULL),sceneNode(NULL),mgr(NULL),texturePath(texture) {}
+    Component():sceneNode(NULL),mgr(NULL) {}
 
     virtual ~Component()
     {
@@ -36,14 +36,6 @@ public:
 
     virtual IMesh *getMesh() { return mesh; }
 
-    virtual path getTexturePath() { return texturePath; }
-
-    virtual void setSceneNode(ISceneNode *node)
-    {
-        if (sceneNode) sceneNode->drop();
-        (sceneNode = node)->grab();
-    }
-
     virtual ISceneNode *getSceneNode() { return sceneNode; }
 
     virtual void setGUIManager(GUIManager *manager)
@@ -53,13 +45,7 @@ public:
     }
 
 protected:
-    /**
-     * Let Manager handles SceneManager, and maps between SceneNodes and
-     * Components, because we can get SceneNode and collision point
-     * from ray
-     **/
     SMesh *mesh;
-    path texturePath;
     ISceneNode *sceneNode;
     GUIManager *mgr;
 };

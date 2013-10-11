@@ -12,9 +12,9 @@ using namespace eigen;
 using namespace interactable;
 
 Plane::Plane(core::dimension2df size, f32 dpi, path texture):
-    Component(texture),
     size(size),
-    dpi(dpi)
+    dpi(dpi),
+    texturePath(texture)
 {
     f32 width  = size.Width  / dpi * Math::INCH_PER_METER,
         height = size.Height / dpi * Math::INCH_PER_METER;
@@ -57,7 +57,7 @@ ISceneNode *Plane::createSceneNode(ISceneManager *smgr)
 
     ITriangleSelector *selector = smgr->createTriangleSelector(mesh, sceneNode);
     sceneNode->setMaterialFlag(EMF_BACK_FACE_CULLING, false);
-    sceneNode->setMaterialTexture(0, smgr->getVideoDriver()->getTexture(getTexturePath()));
+    sceneNode->setMaterialTexture(0, smgr->getVideoDriver()->getTexture(texturePath));
     sceneNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
     sceneNode->setTriangleSelector(selector);
     selector->drop();
