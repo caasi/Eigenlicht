@@ -34,9 +34,13 @@ public:
 
     ISceneNode *createSceneNode(ISceneManager *smgr) { return NULL; }
 
+    ISceneManager *getSceneManager() { return smgr; }
+
     void add(IComponent*);
 
     bool remove(IComponent*);
+
+    void insert(ISceneNode*, IComponent*);
 
     void add(core::line3df*);
 

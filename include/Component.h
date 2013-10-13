@@ -38,16 +38,26 @@ public:
 
     virtual ISceneNode *getSceneNode() { return sceneNode; }
 
-    virtual void setGUIManager(GUIManager *manager)
+    virtual void addTo(GUIManager *manager)
     {
-        if (mgr) mgr->drop();
-        (mgr = manager)->grab();
+        if (!sceneNode)
+            createSceneNode(manager->getSceneManager());
+
+        manager->insert(sceneNode, this);
+
+        setGUIManager(manager);
     }
 
 protected:
     SMesh *mesh;
     ISceneNode *sceneNode;
     GUIManager *mgr;
+
+    virtual void setGUIManager(GUIManager *manager)
+    {
+        if (mgr) mgr->drop();
+        (mgr = manager)->grab();
+    }
 };
 
 }

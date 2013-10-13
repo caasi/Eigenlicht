@@ -38,9 +38,12 @@ public:
 
     virtual IMesh *getMesh() { return NULL; }
 
-    virtual ISceneNode *createSceneNode(ISceneManager*) = 0;
-
     virtual ISceneNode *getSceneNode() { return NULL; }
+
+    virtual void addTo(GUIManager*) {};
+
+protected:
+    virtual ISceneNode *createSceneNode(ISceneManager*) = 0;
 
     virtual void setGUIManager(GUIManager*) {}
 };

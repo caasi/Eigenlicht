@@ -29,9 +29,10 @@ public:
 
     virtual ~Plane();
 
-    virtual ISceneNode *createSceneNode(ISceneManager*);
-
     vector2df getPointFromUV(const vector2df &uv);
+
+protected:
+    virtual ISceneNode *createSceneNode(ISceneManager*);
 
 private:
     dimension2df size;

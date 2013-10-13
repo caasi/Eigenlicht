@@ -50,8 +50,14 @@ Plane::~Plane()
     if (mesh) mesh->drop();
 }
 
+vector2df Plane::getPointFromUV(const vector2df &uv)
+{
+    return vector2df(uv.X * size.Width, uv.Y * size.Height);
+}
+
 ISceneNode *Plane::createSceneNode(ISceneManager *smgr)
 {
+    if (sceneNode) sceneNode->drop();
     sceneNode = smgr->addMeshSceneNode(mesh, 0, GUIManager::ID_COMPONENT);
     sceneNode->grab();
 
@@ -63,9 +69,4 @@ ISceneNode *Plane::createSceneNode(ISceneManager *smgr)
     selector->drop();
 
     return sceneNode;
-}
-
-vector2df Plane::getPointFromUV(const vector2df &uv)
-{
-    return vector2df(uv.X * size.Width, uv.Y * size.Height);
 }

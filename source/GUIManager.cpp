@@ -36,23 +36,21 @@ GUIManager::~GUIManager()
 
 void GUIManager::add(IComponent *component)
 {
-    ISceneNode *node = component->getSceneNode();
-
-    if (!node) node = component->createSceneNode(smgr);
-
-    if (node)
-    {
-        components.insert(pair<ISceneNode*, IComponent*>(node, component));
-        node->grab();
-        component->grab();
-        component->setGUIManager(this);
-    }
+    component->addTo(this);
 }
 
 bool GUIManager::remove(IComponent *component)
 {
     /* TODO */
     return false;
+}
+
+void GUIManager::insert(ISceneNode *node, IComponent *comp)
+{
+    if (!node && !comp) return;
+    components.insert(pair<ISceneNode*, IComponent*>(node, comp));
+    node->grab();
+    comp->grab();
 }
 
 void GUIManager::add(core::line3df *line)
