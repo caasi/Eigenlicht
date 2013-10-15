@@ -17,11 +17,12 @@ add_library (
   Eigenlicht
   STATIC
   ${EIGENLICHT_SOURCE_DIR}/Math.cpp
+  ${EIGENLICHT_SOURCE_DIR}/Projector.cpp
   ${EIGENLICHT_SOURCE_DIR}/GUIManager.cpp
   ${EIGENLICHT_SOURCE_DIR}/Event.cpp
   ${EIGENLICHT_SOURCE_DIR}/EventDispatcher.cpp
   ${EIGENLICHT_SOURCE_DIR}/Plane.cpp
-  ${EIGENLICHT_SOURCE_DIR}/Projector.cpp
+  ${EIGENLICHT_SOURCE_DIR}/TouchPlane.cpp
 )
 
 install (

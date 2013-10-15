@@ -4,8 +4,6 @@
 #include "../include/Math.h"
 #include "../include/Plane.h"
 
-using namespace irr;
-using namespace scene;
 using namespace video;
 
 using namespace eigen;
@@ -48,11 +46,12 @@ Plane::Plane(core::dimension2df size, f32 dpi, path texture):
 Plane::~Plane()
 {
     if (mesh) mesh->drop();
+    if (sceneNode) sceneNode->drop();
 }
 
-vector2df Plane::getPointFromUV(const vector2df &uv)
+core::vector2df Plane::getPointFromUV(const core::vector2df &uv)
 {
-    return vector2df(uv.X * size.Width, uv.Y * size.Height);
+    return core::vector2df(uv.X * size.Width, uv.Y * size.Height);
 }
 
 ISceneNode *Plane::createSceneNode(ISceneManager *smgr)

@@ -42,7 +42,7 @@ public:
 
     void insert(ISceneNode*, IComponent*);
 
-    void add(core::line3df*);
+    void add(irr::core::line3df*);
 
     IComponent *getComponentForSceneNode(ISceneNode*);
 
@@ -59,8 +59,8 @@ private:
     ISceneManager *smgr;
     ISceneCollisionManager *collmgr;
 
-    map<ISceneNode*, IComponent*> components;
-    vector<core::line3df*> lines;
+    std::map<ISceneNode*, IComponent*> components;
+    vector<irr::core::line3df*> lines;
 };
 
 }

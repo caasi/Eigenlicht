@@ -4,12 +4,10 @@
 #include <ICameraSceneNode.h>
 
 using namespace irr;
-using namespace scene;
 using namespace core;
+using namespace scene;
 
 namespace eigen
-{
-namespace core
 {
 
 class Projector
@@ -24,7 +22,6 @@ private:
     static void applyMatrix4(vector3df&, const matrix4&);
 };
 
-}
 }
 
 #endif

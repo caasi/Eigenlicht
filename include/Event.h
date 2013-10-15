@@ -14,11 +14,11 @@ class EventDispatcher;
 
 struct Event
 {
-    Event(string);
+    Event(std::string);
 
     virtual ~Event();
 
-    string type;
+    std::string type;
 
     EventDispatcher *target;
 };

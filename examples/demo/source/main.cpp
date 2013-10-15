@@ -7,14 +7,13 @@ using namespace std;
 #include <utils.h>
 
 using namespace irr;
-using namespace irr::core;
+using namespace core;
 using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
 
 using namespace eigen;
-using namespace eigen::core;
 using namespace event;
 using namespace interactable;
 
@@ -114,17 +113,10 @@ int main(int argc, char *argv[])
         cout << "ready" << endl;
     }
 
-    Plane *plane = new Plane;
+    IComponent *plane = new TouchPlane;
     gui3d->add(plane);
     plane->getSceneNode()->setPosition(vector3df(0, 0, 0.25));
     plane->drop();
-
-    Plane *another = new Plane(dimension2df(640, 480));
-    gui3d->add(another);
-    // you can only get valid scene node after component added to the GUI manager */
-    another->getSceneNode()->setPosition(vector3df(0.25, 0, -0.25));
-    another->getSceneNode()->setRotation(vector3df(0, 90, 0));
-    another->drop();
 
     //smgr->addCubeSceneNode();
     ICameraSceneNode *camera = smgr->addCameraSceneNode(0, vector3df(-0.5, 0.2, -0.5));

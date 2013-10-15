@@ -23,16 +23,16 @@ public:
 
     virtual void dispatchEvent(Event*);
 
-    virtual bool hasEventListener(string, void (*listener)(Event*));
+    virtual bool hasEventListener(std::string, void (*listener)(Event*));
 
-    virtual void addEventListener(string, void (*listener)(Event*));
+    virtual void addEventListener(std::string, void (*listener)(Event*));
 
-    virtual bool removeEventListener(string, void (*listener)(Event*));
+    virtual bool removeEventListener(std::string, void (*listener)(Event*));
 
 private:
-    map< string, vector< void (*)(Event*) >* > eventListenerList;
+    std::map< std::string, std::vector< void (*)(Event*) >* > eventListenerList;
 
-    vector< void (*)(Event*) > *findEventListeners(string);
+    std::vector< void (*)(Event*) > *findEventListeners(std::string);
 };
 
 }

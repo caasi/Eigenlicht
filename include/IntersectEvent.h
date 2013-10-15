@@ -5,8 +5,6 @@
 #include <triangle3d.h>
 #include "Event.h"
 
-using namespace irr;
-
 namespace eigen
 {
 namespace event
@@ -15,9 +13,9 @@ namespace event
 struct IntersectEvent : public Event
 {
     IntersectEvent():Event("intersect") {}
-    core::vector3df intersection;
-    core::vector2df uv;
-    core::triangle3df hitTriangle;
+    irr::core::vector3df intersection;
+    irr::core::vector2df uv;
+    irr::core::triangle3df hitTriangle;
 };
 
 }

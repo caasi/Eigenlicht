@@ -53,7 +53,7 @@ void GUIManager::insert(ISceneNode *node, IComponent *comp)
     comp->grab();
 }
 
-void GUIManager::add(core::line3df *line)
+void GUIManager::add(irr::core::line3df *line)
 {
     lines.push_back(line);
 }
@@ -97,9 +97,9 @@ void GUIManager::update()
     core::vector3df intersection;
     core::triangle3df hitTriangle;
 
-    for (vector<core::line3df*>::iterator it = lines.begin(); it != lines.end(); ++it)
+    for (vector<irr::core::line3df*>::iterator it = lines.begin(); it != lines.end(); ++it)
     {
-        core::line3df &line = **it;
+        irr::core::line3df &line = **it;
 
         ISceneNode *node = collmgr->getSceneNodeAndCollisionPointFromRay(
             line,

@@ -1,9 +1,6 @@
 #include "../include/Projector.h"
 
-using namespace irr::scene;
-using namespace irr::core;
-
-using namespace eigen::core;
+using namespace eigen;
 
 vector3df &Projector::projectToCameraSpace(vector3df &vector, ICameraSceneNode &camera)
 {
